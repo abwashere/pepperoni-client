@@ -1,0 +1,4 @@
+@function rem($size, $base: 16) {
+	@return 1rem * $size / $base;
+}
+/* use ==> rem(anyNum) , ex: rem(10) */

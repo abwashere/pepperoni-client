@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Beth+Ellen&display=swap")
+
+$title-font: "Beth Ellen", cursive
+
+*
+  font-family: Georgia, 'Times New Roman', Times, serif
+
+%titles
+  font-family: $title-font
+
+.title
+  @extend %titles
+  font-size: 35px
+
+.page-title
+  @extend %titles
+  font-size: 20px
+
+.banner-title
+  @extend %titles
+  font-size: 40px
+  text-shadow: 1px 1px 5px #222222
+
+.sub-title
+  font-size: 30px
+
+.information-text
+  color: grey
+  font-size: 14px

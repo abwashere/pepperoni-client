@@ -1,0 +1,16 @@
+.flex-row
+  display: flex
+  align-items: center
+
+  &.sp-btw
+    justify-content: space-between
+
+  &.sp-around
+    justify-content: space-around
+
+  &.sp-center
+    justify-content: center
+
+.flex-col
+  @extend .flex-row
+  flex-direction: column

@@ -1,0 +1,24 @@
+@import "./variables.sass"
+
+.btn
+  border-radius: $border-soft
+  box-shadow : $shadow-soft
+  padding : rem(10) rem(20)
+  @extend .mg-2
+  cursor: pointer
+  background-color: $primary
+  @if (lightness($primary) < 50%)
+    color: #FFF
+  @else
+    color: $primary
+
+  &:hover
+    background-color: rgba($primary, 0.7)
+
+.btn-danger
+  @extend .btn
+  background-color: $danger
+  color: #FFF
+
+  &:hover
+    background-color: rgba($danger, 0.7)
