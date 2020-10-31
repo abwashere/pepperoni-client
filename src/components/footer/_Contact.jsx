@@ -3,17 +3,21 @@ import React from "react";
 const _Contact = () => {
 	return (
 		<div className="Contact">
-			<div>
+			<div className="contact">
 				<p>CONTACT</p>
 				<p>
 					<i class="fas fa-phone"></i> 01 23 45 67 89
 				</p>
 			</div>
-			<div className="social-medias">
+			<div className="contact">
 				<p>SUIVEZ-NOUS</p>
-				<div className="flex-row sp-around">
-					<i class="fab fa-facebook-f"></i>
-					<i class="fab fa-instagram"></i>
+				<div>
+					<a href="/" noopener>
+						<i class="fab fa-facebook-f"></i>
+					</a>
+					<a href="/" noopener>
+						<i class="fab fa-instagram"></i>
+					</a>
 				</div>
 			</div>
 		</div>
