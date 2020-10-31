@@ -2,10 +2,10 @@ import React from "react";
 
 const _Banner = () => {
 	return (
-		<div className="Banner">
+		<div className="Banner flex-col sp-center">
 			<h2 className="banner-title">
-				<span className="green">Italian</span> cuisine
-				<span className="red"> in Paris</span>
+				<span>Italian</span> cuisine
+				<span> in Paris</span>
 			</h2>
 		</div>
 	);

@@ -1,6 +1,53 @@
+$img-height: 600px
+
 .Home
 
   .Gallery
-    padding: 10%
-    background-color: $caramel
-    height: 500px
+    padding: 40px 80px 10px
+    background-color: #000
+
+    .sub-title
+      text-align: center
+      margin-bottom: 40px
+      color: $light
+
+    .carousel-container
+      height: $img-height * 1.2
+      text-align: center
+
+    .carousel-pic
+      height: $img-height
+      margin: auto
+
+    .carousel-caption
+      bottom : -10px
+      text-shadow: 1px 1px 5px #222222
+
+      p
+        font-size: 1.2rem
+        font-family: $title-font
+
+    .carousel-indicators
+      bottom : unset
+      top : $img-height * 1.1
+
+.carousel-control-next > span.sr-only,
+.carousel-control-prev > span.sr-only
+  visibility: hidden
+  position: relative
+
+.carousel-control-next > span.sr-only:after
+  visibility: visible
+  position: absolute
+  top: 0
+  left: 0
+  font-size: 30px
+  content: ">>"
+
+.carousel-control-prev > span.sr-only:before
+  visibility: visible
+  position: absolute
+  top: 0
+  left: 0
+  font-size: 30px
+  content: "<<"

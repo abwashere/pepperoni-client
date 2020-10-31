@@ -6,20 +6,23 @@ import NavLinksClients from "./_NavLinksClients";
 
 const Navbar = (props) => {
 	return (
-		<div className="NavMain">
-			<div className="flex-col">
-				<Link to="/">
-					<h1 className="title">Pepperoni .</h1>
-				</Link>
+		<div className="NavMain flex-col sp-center">
+			<Link to="/">
+				<h1 className="title">Pepperoni .</h1>
+			</Link>
 
-				{/* TODO: if admin is logged in */}
-				<NavLinksAdmin />
+			<h2 className="sub-title">
+				<span>Italian</span> cuisine
+				<span> in Paris</span>
+			</h2>
 
-				{/* TODO: else */}
-				<NavLinksClients />
+			{/* TODO: if admin is logged in */}
+			<NavLinksAdmin />
 
-				{/* TODO: add burger => media queries... */}
-			</div>
+			{/* TODO: else */}
+			<NavLinksClients />
+
+			{/* TODO: add burger => media queries... */}
 		</div>
 	);
 };

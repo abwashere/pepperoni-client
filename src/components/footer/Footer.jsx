@@ -1,11 +1,15 @@
 import React from "react";
+import Contact from "./_Contact";
+import Location from "./_Location";
+import Timetable from "./_Timetable";
 
 const Footer = () => {
 	return (
-		<div>
-			<hr />
-			Footer
-		</div>
+		<footer className="Footer flex-row sp-btw ">
+			<Contact />
+			<Location />
+			<Timetable />
+		</footer>
 	);
 };
 

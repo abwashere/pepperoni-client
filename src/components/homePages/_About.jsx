@@ -2,7 +2,7 @@ import React from "react";
 
 const _About = () => {
 	return (
-		<div className="About flex-row sp-around">
+		<div className="About flex-row sp-center">
 			<div className="chef-image"></div>
 			<div className="chef-presentation">
 				<h2 className="sub-title">Le mot du Chef</h2>

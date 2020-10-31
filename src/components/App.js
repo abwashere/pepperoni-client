@@ -1,4 +1,5 @@
 import "./../styles/App.sass";
+
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Navbar from "./navMain/Navbar";
 import Home from "./homePages/Home";

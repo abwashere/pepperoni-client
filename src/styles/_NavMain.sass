@@ -1,11 +1,30 @@
+$nav-height: 600px
+
 .NavMain
+
+  height: $nav-height
   padding: $padding
+  padding-top: 0
   box-shadow: $shadow-soft
+  color: $light
+  text-shadow: 1px 1px 5px #222222
+
+  background-image: url('./../assets/img/banner.jpg')
+  background-repeat: no-repeat
+  background-position: top
+  background-size: cover
+
+  .sub-title
+    @extend %titles
+    font-size: 25px
+    border-bottom: white 2px solid
+    margin-bottom: 25px
 
   .NavLinks
     width: 100%
 
     li
       margin: 1%
+      font-size: 20px
       &:hover
       @include animated-underline($caramel)

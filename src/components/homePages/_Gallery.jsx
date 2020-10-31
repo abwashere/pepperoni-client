@@ -5,7 +5,7 @@ const _Gallery = () => {
 	return (
 		<div className="Gallery">
 			<h2 className="sub-title">Le restaurant</h2>
-			<div className="img-container">
+			<div className="carousel-container">
 				<Carousel />
 			</div>
 		</div>
