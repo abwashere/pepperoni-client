@@ -6,17 +6,17 @@ const _Contact = () => {
 			<div className="contact">
 				<p>CONTACT</p>
 				<p>
-					<i class="fas fa-phone"></i> 01 23 45 67 89
+					<i className="fas fa-phone"></i> 01 23 45 67 89
 				</p>
 			</div>
 			<div className="contact">
 				<p>SUIVEZ-NOUS</p>
 				<div>
-					<a href="/" noopener>
-						<i class="fab fa-facebook-f"></i>
+					<a href="/" noopener="true">
+						<i className="fab fa-facebook-f"></i>
 					</a>
-					<a href="/" noopener>
-						<i class="fab fa-instagram"></i>
+					<a href="/" noopener="true">
+						<i className="fab fa-instagram"></i>
 					</a>
 				</div>
 			</div>

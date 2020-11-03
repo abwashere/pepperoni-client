@@ -1,9 +1,16 @@
-$tablet-lg-screens: "screen and	(max-width: 1280px)";
-$tablet-m-screens: "screen and	(max-width: 600px)";
-$mobile-small-screens: "screen and (max-width: 420px)";
+// $tablet-lg-screens: "screen and	(max-width: 1280px)";
+// $tablet-m-screens: "screen and	(max-width: 600px)";
+// $mobile-small-screens: "screen and (max-width: 420px)";
 
-/* --------
-desktop : 1024×768 through 1920×1080
-tablet : 601×962 through 1280×800
-mobile : 360×640 through 414×896
-*/
+/* Bootstrap Breakpoints */
+// Small devices (landscape phones, 576px and up)
+$small-device: "(min-width: 576px)";
+
+// Medium devices (tablets, 768px and up)
+$medium-device: "(min-width: 768px)";
+
+// Large devices (desktops, 992px and up)
+$large-device: "(min-width: 992px)";
+
+// Extra large devices (large desktops, 1200px and up)
+$large-device: "(min-width: 1200px)";

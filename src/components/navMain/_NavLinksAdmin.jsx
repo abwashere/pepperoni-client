@@ -6,19 +6,13 @@ const _NavLinksAdmin = (props) => {
 		<div className="NavLinks">
 			<ul className="flex-row sp-center">
 				<li>
-					<NavLink to="/admin/reservations" className="nav-link">
-						Voir les réservations
-					</NavLink>
-				</li>
-				<li>
-					<NavLink to="/admin/menu" className="nav-link">
+					<NavLink to="/admin/menu/edit" className="nav-link">
 						Modifier la carte
 					</NavLink>
-				</li>
+				</li>{" "}
 				<li>
-					{" "}
-					<NavLink to="/admin/gallery" className="nav-link">
-						Modifier la gallerie
+					<NavLink to="/admin/reservations" className="nav-link">
+						Voir les réservations
 					</NavLink>
 				</li>
 			</ul>

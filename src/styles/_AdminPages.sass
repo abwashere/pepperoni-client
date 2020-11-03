@@ -1,0 +1,32 @@
+.AdminPage
+  padding: $padding
+  min-height: 50vh
+
+  .nav-link
+    @include animated-underline($caramel)
+
+  .table
+    width: 100%
+    border-bottom: 1px solid $caramel
+    margin: 20px auto 50px
+
+  .row
+    border-top: 1px solid $caramel
+    &:hover
+      background-color: $caramel
+
+    td
+      min-width: 100px
+      padding: 0 5px
+
+      &:last-child
+        text-align: right
+
+  $mui-delete-btn-size : 30px
+  .mui-btn.delete
+    padding: 0
+    width: $mui-delete-btn-size
+    height: $mui-delete-btn-size
+    line-height: $mui-delete-btn-size
+  .mui-btn.edit
+    background-color: $caramel
