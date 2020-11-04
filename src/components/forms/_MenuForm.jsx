@@ -46,21 +46,21 @@ const _MenuForm = (props) => {
 
 				{/* -- BUTTONS  */}
 				{props.match.params.mode === "edit" && (
-					<div>
-						<button type="submit" className="mui-btn mui-btn--flat mui">
-							Supprimer <i className="fas fa-trash-alt"></i>
-						</button>
+					<React.Fragment>
 						<button type="submit" className="mui-btn edit">
 							Modifier <i className="fas fa-pen-fancy"></i>
 						</button>
-					</div>
+						<button type="submit" className="mui-btn mui-btn--flat mui">
+							Supprimer <i className="fas fa-trash-alt"></i>
+						</button>
+					</React.Fragment>
 				)}
 				{props.match.params.mode === "create" && (
-					<div>
+					<React.Fragment>
 						<button type="submit" className="mui-btn edit">
 							Créer <i className="fas fa-plus"></i>
 						</button>
-					</div>
+					</React.Fragment>
 				)}
 			</form>
 		</div>
