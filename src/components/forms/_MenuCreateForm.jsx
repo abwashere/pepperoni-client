@@ -1,26 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-const handleChange = () => {};
-const handleSubmit = () => {};
+import {
+	getMenu,
+	getMeal,
+	createMeal,
+	updateMeal,
+	deleteMeal,
+} from "../../store/actions/foodActions";
+
+// const handleSubmit = () => {};
 
 const _MenuForm = (props) => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getMenu());
+	}, [dispatch]);
+
+	const menu = useSelector((state) => state.foodStore.menu);
+	const pickedMeal = useSelector((state) => state.foodStore.pickedMeal._id);
+
+	const [mealData, setMealData] = useState({
+		foodName: "",
+		category: "",
+		description: "",
+		price: null,
+	});
+
+	const handleChange = (e) => {
+		let key = e.target.name;
+		let value = e.target.value;
+		setMealData({ [key]: value });
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		dispatch(createMeal(mealData));
+	};
+
+	const handleDelete = () => deleteMeal(pickedMeal);
+
 	return (
 		<div className="EditMenuForm form-container">
-			<form
-				className="mui-form"
-				onChange={handleChange}
-				onSubmit={handleSubmit}
-			>
+			<form className="mui-form">
 				{/* -- SELECTION  */}
 				<div className="mui-select">
-					<select name="category" required>
+					<select name="category" onChange={() => getMeal(pickedMeal)} required>
 						<option value="">Sélectionner un plat</option>
-						{/* TODO: map ici */}
-						<option>Option 1</option>
-						<option>Option 2</option>
+						{menu.map((meal) => (
+							<option key={meal._id} value={meal._id}>
+								{meal.foodName}
+							</option>
+						))}
 					</select>
-					<label>Sélectionner un plat</label>
+					<label>Plat à modifier</label>
 				</div>
 				{/* -- EDIT NAME  */}
 				<div className="mui-textfield mui-textfield--float-label">
@@ -47,17 +81,29 @@ const _MenuForm = (props) => {
 				{/* -- BUTTONS  */}
 				{props.match.params.mode === "edit" && (
 					<React.Fragment>
-						<button type="submit" className="mui-btn edit">
+						<button
+							type="submit"
+							onClick={handleSubmit}
+							className="mui-btn edit"
+						>
 							Modifier <i className="fas fa-pen-fancy"></i>
 						</button>
-						<button type="submit" className="mui-btn mui-btn--flat mui">
+						<button
+							type="submit"
+							onClick={handleDelete}
+							className="mui-btn mui-btn--flat mui"
+						>
 							Supprimer <i className="fas fa-trash-alt"></i>
 						</button>
 					</React.Fragment>
 				)}
 				{props.match.params.mode === "create" && (
 					<React.Fragment>
-						<button type="submit" className="mui-btn edit">
+						<button
+							type="submit"
+							onClick={handleSubmit}
+							className="mui-btn edit"
+						>
 							Créer <i className="fas fa-plus"></i>
 						</button>
 					</React.Fragment>

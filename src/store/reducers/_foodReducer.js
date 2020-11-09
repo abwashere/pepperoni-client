@@ -1,13 +1,15 @@
 const initState = {
 	menu: [],
 	pickedMeal: [],
-	error: "",
+	//error: "",
 };
 
 const foodReducer = (state = initState, action) => {
 	switch (action.type) {
 		//1
 		case "food/getMenu":
+			console.log("reducer got the menu: ", action.payload);
+
 			return {
 				...state,
 				menu: action.payload,
@@ -23,7 +25,7 @@ const foodReducer = (state = initState, action) => {
 
 		//2
 		case "food/getMeal":
-			console.log("food selected:", action.payload);
+			console.log("reducer got meal selected:", action.payload);
 
 			return {
 				...state,
@@ -32,7 +34,7 @@ const foodReducer = (state = initState, action) => {
 
 		//3
 		case "food/create":
-			console.log("created meal:", action.payload);
+			console.log("reducer got created meal:", action.payload);
 
 			return {
 				...state,
@@ -41,21 +43,21 @@ const foodReducer = (state = initState, action) => {
 
 		//4
 		case "food/update":
-			console.log("updated meal:", action.payload);
+			console.log("reducer got updated meal:", action.payload);
 
 			return {
 				...state,
 				menu: state.menu.map((meal) =>
-					meal.id === action.payload.id ? action.payload : meal
+					meal._id === action.payload._id ? action.payload : meal
 				),
 			};
 
 		//5
 		case "food/delete":
-			console.log("deleted meal:", action.food);
+			console.log("reducer got deleted meal:", action.payload);
 			return {
 				...state,
-				menu: state.menu.filter((meal) => meal.id !== action.payload.id),
+				menu: state.menu.filter((meal) => meal._id !== action.payload._id),
 			};
 
 		//default

@@ -26,7 +26,7 @@ function App() {
 					{/* ADMIN ROUTES TODO: PROTECT */}
 					<Route path="/admin/signin" component={SignIn} />
 					<Route path="/admin/reservations" component={ReservationList} />
-					<Route path="/admin/menu/:mode(create|edit)" component={EditMenu} />
+					<Route path="/admin/menu/:mode(create|update)" component={EditMenu} />
 				</Switch>
 				<Footer />
 			</div>

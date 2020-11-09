@@ -36,7 +36,7 @@ export const createMeal = () => async (dispatch) => {
 };
 
 //4
-export const updateFood = (id, updatedInfos) => async (dispatch) => {
+export const updateMeal = (id, updatedInfos) => async (dispatch) => {
 	try {
 		const res = await foodApi.updateFood(id, updatedInfos);
 		dispatch({ type: "food/update", payload: res.data });
@@ -47,7 +47,7 @@ export const updateFood = (id, updatedInfos) => async (dispatch) => {
 };
 
 //5
-export const deleteFood = (id) => async (dispatch) => {
+export const deleteMeal = (id) => async (dispatch) => {
 	try {
 		const res = await foodApi.deleteFood(id);
 		dispatch({ type: "food/delete", payload: res.data });
