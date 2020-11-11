@@ -1,7 +1,7 @@
 const initState = {
 	menu: [],
-	pickedMeal: [],
-	//error: "",
+	//errorFromApi: null,
+	pickedMeal: null,
 };
 
 const foodReducer = (state = initState, action) => {
@@ -15,13 +15,13 @@ const foodReducer = (state = initState, action) => {
 				menu: action.payload,
 			};
 
-		case "food/getMenu_error":
-			console.log("error trying to get the menu: ", action.payload);
+		// case "food/getMenu_error":
+		// 	console.log("reducer => fail to get the menu: ", action.payload);
 
-			return {
-				...state,
-				error: action.payload,
-			};
+		// 	return {
+		// 		...state,
+		// 		errorFromApi: action.payload,
+		// 	};
 
 		//2
 		case "food/getMeal":
@@ -40,10 +40,17 @@ const foodReducer = (state = initState, action) => {
 				...state,
 				menu: [...state.menu, action.payload],
 			};
+		// case "food/create_error":
+		// 	console.log("reducer => fail to create meal:", action.payload);
+
+		// 	return {
+		// 		...state,
+		// 		errorFromApi: action.payload,
+		// 	};
 
 		//4
 		case "food/update":
-			console.log("reducer got updated meal:", action.payload);
+			console.log("reducer => got updated meal:", action.payload);
 
 			return {
 				...state,
@@ -51,14 +58,27 @@ const foodReducer = (state = initState, action) => {
 					meal._id === action.payload._id ? action.payload : meal
 				),
 			};
+		// case "food/update_error":
+		// 	console.log("reducer => fail to update meal:", action.payload);
+
+		// 	return {
+		// 		...state,
+		// 		errorFromApi: action.payload,
+		// 	};
 
 		//5
 		case "food/delete":
-			console.log("reducer got deleted meal:", action.payload);
+			console.log("reducer => got deleted meal:", action.payload);
 			return {
 				...state,
 				menu: state.menu.filter((meal) => meal._id !== action.payload._id),
 			};
+		// case "food/delete_error":
+		// 	console.log("reducer => fail to delete meal:", action.payload);
+		// 	return {
+		// 		...state,
+		// 		errorFromApi: action.payload,
+		// 	};
 
 		//default
 		default:
