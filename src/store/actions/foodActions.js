@@ -27,10 +27,10 @@ export const getMeal = (id) => {
 };
 
 //3
-export const createMeal = () => {
+export const createMeal = (newMeal) => {
 	return async (dispatch) => {
 		try {
-			const res = await foodApi.createFood();
+			const res = await foodApi.createFood(newMeal);
 			dispatch({ type: "food/create", payload: res.data });
 		} catch (err) {
 			console.log(err);

@@ -15,9 +15,7 @@ function App() {
 		<BrowserRouter>
 			<div className="App">
 				<Navbar />
-				{/*
-				{userInSession && <Navbar style={{background:"none"}} />} 
-				 */}
+
 				<Switch>
 					{/* PUBLIC ROUTES */}
 					<Route exact path="/" component={Home} />

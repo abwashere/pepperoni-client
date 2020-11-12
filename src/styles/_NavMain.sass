@@ -1,31 +1,42 @@
-$nav-height: 600px
+$nav-height: 200px
 
 .NavMain
 
-  height: $nav-height
-  padding: $padding
+  min-height: $nav-height
   padding-top: 0
   box-shadow: $shadow-soft
-  color: $light
-  text-shadow: 1px 1px 5px #222222
 
-  background-image: url('./../assets/img/banner.jpg')
-  background-repeat: no-repeat
-  background-position: top
-  background-size: cover
+  color: $primary
 
-  .sub-title
-    @extend %titles
-    font-size: 25px
-    border-bottom: white 2px solid
-    margin-bottom: 25px
+  .nav-header
+    border-bottom: 1px solid $caramel
+    line-height: 12px
+    text-align: center
+    padding: 15px
+    margin-bottom: 10px
+
+    .nav-title
+      font-size: 27px
+
+    .nav-subtitle
+      font-size: 16px
+      font-style: oblique
+
+  .NavLinksAuth
+    min-height: 25px
+    line-height: 25px
+    width: 100%
+    background-color: $primary
+    color: $light
+    font-size: 14px
+
+    .flex-row
+      justify-content: flex-end
 
   .NavLinks
     width: 100%
-    background-color: rgba($primary, 0.5)
-    border-radius: $border-pill
 
     li
       margin: 1%
-      font-size: 20px
+      font-size: 18px
       @include animated-underline($caramel)

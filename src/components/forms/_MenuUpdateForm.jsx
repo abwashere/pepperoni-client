@@ -12,8 +12,10 @@ import { confirmDelete } from "../../utils/confirmationPrompts";
 //TODO: api errors handling
 
 const _MenuUpdateForm = (props) => {
+	//
 	document.title = "Admin | modifier menu";
 
+	//
 	const dispatch = useDispatch();
 
 	//load the menu at first render and dispatch calls
@@ -37,7 +39,7 @@ const _MenuUpdateForm = (props) => {
 			let pickedMeal = menu.filter((meal) => meal._id === pickedMealId)[0];
 			setCurrentMeal({
 				...pickedMeal,
-				description: pickedMeal.description || "", //because desert don't have description => prevents the other meals description to stay in the state
+				description: pickedMeal.description || "", //because desert don't have description => prevents the other meals description to persist in state
 			});
 		} else {
 			setCurrentMeal({ ...currentMeal, [e.target.name]: e.target.value });
@@ -59,12 +61,14 @@ const _MenuUpdateForm = (props) => {
 	};
 
 	const handleDelete = (e) => {
+		//this function handles the actual delete
 		let callbackDelete = () => {
 			dispatch(deleteMeal(currentMeal._id));
 			//then, clear all fields :
 			setCurrentMeal({});
 			document.getElementById("pickedMeal").value = "";
 		};
+		//this function asks for confirmation and if so, executes the callbackDelete function
 		confirmDelete(currentMeal.foodName, callbackDelete);
 	};
 

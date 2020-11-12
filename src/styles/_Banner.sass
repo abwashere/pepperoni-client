@@ -1,11 +1,22 @@
 $banner-height: 500px
 
 .Banner
-  height: $banner-height
-  text-align: center
+  width: 70%
+  margin: 50px auto 100px
+  min-height: $banner-height
   box-shadow: $shadow-soft
-  // background-image: url('./../assets/img/banner.jpg')
-  // background-repeat: no-repeat
-  // background-position: top
-  // background-size: cover
+
+  background-image: url('./../assets/img/banner.jpg')
+  background-repeat: no-repeat
+  background-position: top
+  background-size: cover
+
+  text-align: center
   color: $light
+  text-shadow: 1px 1px 5px #222222
+
+  .banner-title
+    @extend %titles
+    font-size: 25px
+    border-bottom: white 1px solid
+    margin-bottom: 25px

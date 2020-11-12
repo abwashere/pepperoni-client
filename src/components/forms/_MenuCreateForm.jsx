@@ -8,47 +8,50 @@ import { confirmCreate } from "../../utils/confirmationPrompts";
 //TODO: api errors handling
 
 const _MenuCreateForm = (props) => {
+	//
 	document.title = "Admin | ajouter un plat";
 
+	//
 	const dispatch = useDispatch();
-	const [mealData, setMealData] = useState({});
+	const [mealData, setMealData] = useState();
 	const [confirmation, setConfirmation] = useState(false);
 	const [validationErr, setValidationErr] = useState(false);
 
 	//empty fields check
 	useEffect(() => {
-		return () => {
-			//cleanup function
-
-			if (mealData.category === "dessert") {
-				!mealData.foodName || !mealData.price
-					? setValidationErr(true)
-					: setValidationErr(false);
-			} else {
-				!mealData.foodName || !mealData.price || !mealData.description
-					? setValidationErr(true)
-					: setValidationErr(false);
-			}
-		};
+		if (!mealData) {
+			//this condition prevents error message to appear at first render
+			setValidationErr(false);
+		} else if (mealData.category === "dessert") {
+			mealData.foodName && mealData.price
+				? setValidationErr(false)
+				: setValidationErr(true);
+		} else {
+			mealData.foodName && mealData.price && mealData.description
+				? setValidationErr(false)
+				: setValidationErr(true);
+		}
 	}, [mealData]);
-
-	console.log("mealData", mealData);
-	console.log("validation error =>", validationErr);
 
 	//form events/functions
 	const handleChange = (e) =>
 		setMealData({ ...mealData, [e.target.name]: e.target.value });
 
-	const handleReset = () => setMealData({});
+	const handleReset = () => props.history.go(0);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		dispatch(createMeal(mealData));
-		setConfirmation(true);
-		setTimeout(() => {
-			setConfirmation(false);
-			handleReset();
-		}, 6000);
+
+		let callbackCreate = () => {
+			dispatch(createMeal(mealData));
+			setConfirmation(true);
+			setTimeout(() => {
+				setConfirmation(false);
+				handleReset();
+			}, 6000);
+		};
+
+		confirmCreate(mealData.foodName, callbackCreate); //func that calls the callbackCreate func after confirmation
 	};
 
 	return (
