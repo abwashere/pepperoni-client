@@ -9,8 +9,7 @@ import {
 } from "../../store/actions/foodActions";
 import { confirmDelete } from "../../utils/confirmationPrompts";
 
-//FIXME: envoi du message de confirmation qu'importe la réponse du serveur => gestion des erreurs à corriger
-//FIXME: price becomes a string on change
+//TODO: api errors handling
 
 const _MenuUpdateForm = (props) => {
 	document.title = "Admin | modifier menu";
@@ -29,19 +28,7 @@ const _MenuUpdateForm = (props) => {
 	const [confirmation, setConfirmation] = useState(false);
 
 	//empty fields check
-	let validationErr = null;
-	for (let key in currentMeal) {
-		if (
-			(key === "foodName" || key === "category" || key === "price") &&
-			!currentMeal[key] //one of these fields is empty
-		) {
-			validationErr = "Veuillez renseigner tous les champs.";
-			console.log("error in field", key, validationErr);
-			break;
-		} else {
-			validationErr = null;
-		}
-	}
+	const validationErr = !currentMeal.foodName || !currentMeal.price || null;
 
 	//events/functions
 	const handleChange = (e) => {
@@ -51,11 +38,6 @@ const _MenuUpdateForm = (props) => {
 			setCurrentMeal({
 				...pickedMeal,
 				description: pickedMeal.description || "", //because desert don't have description => prevents the other meals description to stay in the state
-			});
-		} else if (e.target.name === "price") {
-			setCurrentMeal({
-				...currentMeal,
-				[e.target.name]: Number(e.target.value),
 			});
 		} else {
 			setCurrentMeal({ ...currentMeal, [e.target.name]: e.target.value });
@@ -85,8 +67,6 @@ const _MenuUpdateForm = (props) => {
 		};
 		confirmDelete(currentMeal.foodName, callbackDelete);
 	};
-
-	console.log("modified meal =>", currentMeal);
 
 	/* --------- RENDER --------- */
 	/* -------------------------- */
@@ -177,25 +157,28 @@ const _MenuUpdateForm = (props) => {
 							</div>
 						)}
 						{validationErr && (
-							<div style={{ color: "red" }}>{validationErr}</div>
+							<div className="form-error-msg">
+								<i className="fas fa-exclamation-triangle"></i> Veuillez
+								renseigner tous les champs.
+							</div>
 						)}
 						{/* -- BUTTONS  */}
 						<button
 							type="submit"
-							disabled={Boolean(validationErr)} //prevent form submit if a required field is empty
+							disabled={validationErr} //prevent form submit if a required field is empty
 							className="mui-btn edit"
 						>
 							<i className="fas fa-pen-fancy"></i> Modifier
 						</button>
 						<button
-							type="button" //prevent form submit = no page refresh
+							type="button" //prevent form submit
 							onClick={handleDelete}
 							className="mui-btn mui-btn--flat mui"
 						>
 							<i className="fas fa-trash-alt"></i> Supprimer
 						</button>
 						<button
-							type="button" //prevent form submit = no page refresh
+							type="button" //prevent form submit
 							onClick={handleReset}
 							className="mui-btn edit"
 						>

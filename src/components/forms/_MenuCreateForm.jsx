@@ -1,37 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { createMeal } from "../../store/actions/foodActions";
 import { confirmCreate } from "../../utils/confirmationPrompts";
 
-//FIXME: envoi du message de confirmation qu'importe la réponse du serveur => gestion des erreurs à corriger
+//TODO: api errors handling
 
-const _MenuForm = (props) => {
+const _MenuCreateForm = (props) => {
 	document.title = "Admin | ajouter un plat";
 
 	const dispatch = useDispatch();
-
-	const initialState = {
-		id: "",
-		foodName: "",
-		category: "",
-		description: "",
-		price: "",
-	};
-	const [mealData, setMealData] = useState(initialState);
-
+	const [mealData, setMealData] = useState({});
 	const [confirmation, setConfirmation] = useState(false);
+	const [validationErr, setValidationErr] = useState(false);
+
+	//empty fields check
+	useEffect(() => {
+		return () => {
+			//cleanup function
+
+			if (mealData.category === "dessert") {
+				!mealData.foodName || !mealData.price
+					? setValidationErr(true)
+					: setValidationErr(false);
+			} else {
+				!mealData.foodName || !mealData.price || !mealData.description
+					? setValidationErr(true)
+					: setValidationErr(false);
+			}
+		};
+	}, [mealData]);
+
+	console.log("mealData", mealData);
+	console.log("validation error =>", validationErr);
 
 	//form events/functions
-
 	const handleChange = (e) =>
 		setMealData({ ...mealData, [e.target.name]: e.target.value });
 
-	const handleReset = () => setMealData(initialState);
-
-	console.log(typeof mealData.price);
-	//FIXME: PRICE IS A STRING !
+	const handleReset = () => setMealData({});
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -85,16 +93,25 @@ const _MenuForm = (props) => {
 						{mealData.foodName} a bien été ajouté à la carte.
 					</div>
 				)}
+				{validationErr && (
+					<div className="form-error-msg">
+						<i className="fas fa-exclamation-triangle"></i> Veuillez renseigner
+						tous les champs. <br />
+					</div>
+				)}
+				<div className="information-text">
+					La description n'est pas requise pour les desserts.
+				</div>
 				{/* -- BUTTONS  */}
-				<button type="submit" className="mui-btn edit">
+				<button type="submit" disabled={validationErr} className="mui-btn edit">
 					<i className="fas fa-save"></i> Enregistrer
 				</button>
+				<button type="button" onClick={handleReset} className="mui-btn edit">
+					<i className="fas fa-times"></i> Effacer le formulaire
+				</button>
 			</form>
-			<button onClick={handleReset} className="mui-btn edit">
-				<i className="fas fa-times"></i> Effacer le formulaire
-			</button>
 		</div>
 	);
 };
 
-export default withRouter(_MenuForm);
+export default withRouter(_MenuCreateForm);

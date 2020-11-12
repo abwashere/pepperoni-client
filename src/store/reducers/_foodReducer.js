@@ -8,7 +8,9 @@ const foodReducer = (state = initState, action) => {
 	switch (action.type) {
 		//1
 		case "food/getMenu":
-			console.log("reducer got the menu: ", action.payload);
+			console.log(
+				"reducer got the menu: " + action.payload.length + "meals in store"
+			);
 
 			return {
 				...state,
