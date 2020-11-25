@@ -168,26 +168,28 @@ const _MenuUpdateForm = (props) => {
 						)}
 						{/* -- BUTTONS  */}
 						<button
-							type="submit"
-							disabled={validationErr} //prevent form submit if a required field is empty
-							className="mui-btn edit"
-						>
-							<i className="fas fa-pen-fancy"></i> Modifier
-						</button>
-						<button
-							type="button" //prevent form submit
-							onClick={handleDelete}
-							className="mui-btn mui-btn--flat mui"
-						>
-							<i className="fas fa-trash-alt"></i> Supprimer
-						</button>
-						<button
 							type="button" //prevent form submit
 							onClick={handleReset}
-							className="mui-btn edit"
+							className="mui-btn mui-btn--flat mui"
 						>
 							<i className="fas fa-times"></i> Effacer les modifications
 						</button>
+						<div className="btn-group flex-row sp-btw">
+							<button
+								type="button" //prevent form submit
+								onClick={handleDelete}
+								className="mui-btn mui-btn--flat mui"
+							>
+								<i className="fas fa-trash-alt"></i> Supprimer le plat
+							</button>
+							<button
+								type="submit"
+								disabled={validationErr} //prevent form submit if a required field is empty
+								className="mui-btn edit"
+							>
+								<i className="fas fa-pen-fancy"></i> Modifier
+							</button>
+						</div>
 					</>
 				)}
 			</form>{" "}
