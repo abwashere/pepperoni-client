@@ -192,7 +192,7 @@ const _MenuUpdateForm = (props) => {
 						</div>
 					</>
 				)}
-			</form>{" "}
+			</form>
 		</div>
 	);
 };

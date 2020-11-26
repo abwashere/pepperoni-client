@@ -6,7 +6,7 @@ import Home from "./components/homePages/Home";
 import Menu from "./components/Menu";
 import Reservation from "./components/Reservation";
 import Footer from "./components/footer/Footer";
-import SignIn from "./components/auth/SignIn";
+import LogIn from "./components/auth/LogIn";
 import ReservationList from "./components/adminPages/ReservationList";
 import EditMenu from "./components/adminPages/EditMenu";
 
@@ -22,7 +22,7 @@ function App() {
 					<Route exact path="/menu" component={Menu} />
 					<Route exact path="/reservation" component={Reservation} />
 					{/* ADMIN ROUTES TODO: PROTECT */}
-					<Route path="/admin/signin" component={SignIn} />
+					<Route path="/admin/login" component={LogIn} />
 					<Route path="/admin/reservations" component={ReservationList} />
 					<Route path="/admin/menu/:mode(create|update)" component={EditMenu} />
 				</Switch>

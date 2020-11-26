@@ -106,12 +106,22 @@ const _MenuCreateForm = (props) => {
 					La description n'est pas requise pour les desserts.
 				</div>
 				{/* -- BUTTONS  */}
-				<button type="submit" disabled={validationErr} className="mui-btn edit">
-					<i className="fas fa-save"></i> Enregistrer
-				</button>
-				<button type="button" onClick={handleReset} className="mui-btn edit">
-					<i className="fas fa-times"></i> Effacer le formulaire
-				</button>
+				<div className="btn-group flex-row sp-btw">
+					<button
+						type="submit"
+						disabled={validationErr}
+						className="mui-btn edit"
+					>
+						<i className="fas fa-save"></i> Enregistrer
+					</button>
+					<button
+						type="button"
+						onClick={handleReset}
+						className="mui-btn mui-btn--flat mui"
+					>
+						<i className="fas fa-times"></i> Effacer le formulaire
+					</button>
+				</div>
 			</form>
 		</div>
 	);
