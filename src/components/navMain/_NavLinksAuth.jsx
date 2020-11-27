@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,13 +15,14 @@ const _NavLinksAuth = (props) => {
 
 	useEffect(() => {
 		dispatch(isLoggedIn());
-	}, [dispatch]);
+	}, []);
 
 	const handleLogout = () => {
 		dispatch(logout());
 		setTimeout(() => {
 			dispatch(clearMessages());
 		}, 4000);
+		props.history.push("/admin/login");
 	};
 
 	return (
@@ -53,4 +54,4 @@ const _NavLinksAuth = (props) => {
 	);
 };
 
-export default _NavLinksAuth;
+export default withRouter(_NavLinksAuth);
