@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { isLoggedIn, logout } from "./../../store/actions/authActions";
+import {
+	isLoggedIn,
+	logout,
+	clearMessages,
+} from "./../../store/actions/authActions";
 
 const _NavLinksAuth = (props) => {
 	const auth = useSelector((state) => state.authStore);
 
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		dispatch(isLoggedIn());
+	}, [dispatch]);
+
 	const handleLogout = () => {
 		dispatch(logout());
-
-		// set timout to dispatch(clearMessages())
-		// then redirect
+		setTimeout(() => {
+			dispatch(clearMessages());
+		}, 4000);
 	};
 
 	return (
@@ -27,10 +35,14 @@ const _NavLinksAuth = (props) => {
 					</li>
 				) : (
 					<>
-						<li>
-							Utilisateur : <b>{auth.loggedUser.firstName}</b> -{" "}
-							{auth.loggedUser.privileges}
+						<li className="nav-link" style={{ cursor: "default" }}>
+							{auth.loggedUser.privileges} : <b>{auth.loggedUser.firstName}</b>
 						</li>
+						{auth.loggedUser.privileges === "admin" && (
+							<NavLink to="/admin/staff" className="nav-link">
+								Liste du Personnel
+							</NavLink>
+						)}
 						<li onClick={handleLogout} className="nav-link">
 							Déconnexion
 						</li>

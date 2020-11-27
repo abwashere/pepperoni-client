@@ -9,6 +9,7 @@ import Footer from "./components/footer/Footer";
 import LogIn from "./components/auth/LogIn";
 import ReservationList from "./components/adminPages/ReservationList";
 import EditMenu from "./components/adminPages/EditMenu";
+import EmployeesList from "./components/adminPages/EmployeesList";
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 					<Route exact path="/reservation" component={Reservation} />
 					{/* ADMIN ROUTES TODO: PROTECT */}
 					<Route path="/admin/login" component={LogIn} />
+					<Route path="/admin/staff" component={EmployeesList} />
 					<Route path="/admin/reservations" component={ReservationList} />
 					<Route path="/admin/menu/:mode(create|update)" component={EditMenu} />
 				</Switch>

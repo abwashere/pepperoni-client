@@ -37,6 +37,16 @@ const authReducer = (state = initState, action) => {
 				invalidCredentials: action.payload.invalidCredentials || null,
 			};
 
+		case "auth/login_error":
+			console.log(
+				"reducer received an error from api : " + action.payload.message
+			);
+
+			return {
+				...state,
+				invalidCredentials: "Identifiants invalides.",
+			};
+
 		//3
 		case "auth/isLoggedIn":
 			console.log(
@@ -48,7 +58,6 @@ const authReducer = (state = initState, action) => {
 				...state,
 				userIsLoggedIn: action.payload.user ? true : false,
 				loggedUser: action.payload.user || null,
-				warningMessage: action.payload.warningMessage,
 			};
 
 		//4

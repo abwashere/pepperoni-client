@@ -7,7 +7,7 @@ import NavLinksClients from "./_NavLinksClients";
 
 const Navbar = (props) => {
 	return (
-		<div className="NavMain flex-col sp-center">
+		<div className="NavMain flex-col sp-btw">
 			<NavLinksAuth />
 
 			<header className="nav-header">
