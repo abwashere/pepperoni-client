@@ -1,29 +1,33 @@
 import * as authApi from "./../../api/authApiHandler";
 
+//how to handle errors ==> https://alexandrempsantos.com/sane-error-handling-react-redux/
+export const errorActionCreator = (errorType, error) => {
+	return {
+		type: errorType,
+		error: true,
+		payload: error,
+	};
+};
+
 //Register new user
 export const registerUser = (newUser) => {
 	return async (dispatch) => {
 		try {
 			const res = await authApi.registerUser(newUser);
 			dispatch({ type: "auth/registerUser", payload: res.data });
-			//payload is {user: obj} or {invalidCredentials: string}
 		} catch (err) {
-			console.log(err);
-			dispatch({ type: "auth/registerUser_error", payload: err });
+			dispatch(errorActionCreator("auth/registerUser_error", err));
 		}
 	};
 };
 
-//Login
 export const login = (user) => {
 	return async (dispatch) => {
 		try {
 			const res = await authApi.login(user);
 			dispatch({ type: "auth/login", payload: res.data });
-			//payload is {loggedUser, message} or {invalidCredentials}
 		} catch (err) {
-			console.log(err);
-			dispatch({ type: "auth/login_error", payload: err });
+			dispatch(errorActionCreator("auth/login_error", err));
 		}
 	};
 };
@@ -34,10 +38,8 @@ export const isLoggedIn = () => {
 		try {
 			const res = await authApi.isLoggedIn();
 			dispatch({ type: "auth/isLoggedIn", payload: res.data });
-			//payload is {req.session.currentUser} or {message}
 		} catch (err) {
-			console.log(err);
-			dispatch({ type: "auth/isLoggedIn_error", payload: err });
+			dispatch(errorActionCreator("auth/isLoggedIn_error", err));
 		}
 	};
 };
@@ -50,9 +52,7 @@ export const logout = () => {
 			dispatch({ type: "auth/logout", payload: res.data });
 			//payload is {message}
 		} catch (err) {
-			console.log(err);
-			dispatch({ type: "auth/logout_error", payload: err });
-			//payload is {error, message}
+			dispatch(errorActionCreator("auth/logout_error", err));
 		}
 	};
 };

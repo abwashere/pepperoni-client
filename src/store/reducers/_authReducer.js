@@ -4,79 +4,70 @@ const initState = {
 	successMessage: null,
 	invalidCredentials: null,
 	warningMessage: null,
-	//errorFromApi: null,
 };
 
 const authReducer = (state = initState, action) => {
 	switch (action.type) {
-		//1
+		//----------------------------------------
 		case "auth/registerUser":
-			console.log(
-				"reducer tried to create new user and got from api : " + action.payload
-			);
-
 			return {
 				...state,
-				// userIsLoggedIn: action.payload.user ? true : false,
-				// loggedUser: action.payload.user || null,
 				successMessage: action.payload.successMessage || null,
-				invalidCredentials: action.payload.invalidCredentials || null,
+				invalidCredentials: null,
 			};
 
-		//2
-		case "auth/login":
-			console.log(
-				"reducer tried to log in and got from api : " + action.payload
-			);
+		case "auth/registerUser_error":
+			return {
+				...state,
+				invalidCredentials: action.payload.response.data.errors || null,
+			};
 
+		//----------------------------------------
+		case "auth/login":
 			return {
 				...state,
 				userIsLoggedIn: action.payload.user ? true : false,
 				loggedUser: action.payload.user || null,
 				successMessage: action.payload.successMessage || null,
-				invalidCredentials: action.payload.invalidCredentials || null,
 			};
 
 		case "auth/login_error":
-			console.log(
-				"reducer received an error from api : " + action.payload.message
-			);
-
 			return {
 				...state,
-				invalidCredentials: "Identifiants invalides.",
+				invalidCredentials: action.payload.response.data.errors || null,
 			};
 
-		//3
+		//----------------------------------------
 		case "auth/isLoggedIn":
-			console.log(
-				"reducer tried to check logged in status and got from api : " +
-					action.payload
-			);
-
 			return {
 				...state,
-				userIsLoggedIn: action.payload.user ? true : false,
-				loggedUser: action.payload.user || null,
+				userIsLoggedIn: action.payload.isLoggedIn,
+				loggedUserId: action.payload.userId || null,
 			};
 
-		//4
-		case "auth/logout":
-			console.log(
-				"reducer tried to log out and got from api : " + action.payload
-			);
+		case "auth/isLoggedIn_error":
+			return {
+				warningMessage: action.payload.response.data.errors,
+			};
 
+		//----------------------------------------
+		case "auth/logout":
 			return {
 				...state,
 				userIsLoggedIn: false,
 				loggedUser: null,
 				successMessage: action.payload.successMessage || null,
 			};
+		case "auth/logout_error":
+			console.log("Reducer failed to log out user.");
+			return {
+				...state,
+				warningMessage: action.payload.response.data.errors,
+			};
 
-		//5
+		//----------------------------------------
 		case "auth/clearMessages":
-			console.log("reducer clear all messages : ");
-
+			console.log("Reducer cleared all messages : ");
 			return {
 				...state,
 				successMessage: null,

@@ -31,24 +31,34 @@ const _LoginForm = () => {
 					<input type="text" name="pseudo" required />
 					<label>Pseudo</label>
 				</div>
+				{/* Invalid pseudo Message */}
+				{auth.invalidCredentials?.pseudo && (
+					<div className="form-error-msg">
+						<i className="fas fa-exclamation-triangle"></i>
+						{"   "}
+						{auth.invalidCredentials.pseudo}
+					</div>
+				)}
 				<div className="mui-textfield mui-textfield--float-label">
 					<input type="password" name="password" required />
 					<label>Mot de passe</label>
 				</div>
+				{/* Invalid password Message */}
+				{auth.invalidCredentials?.password && (
+					<div className="form-error-msg">
+						<i className="fas fa-exclamation-triangle"></i>
+						{"   "}
+						{auth.invalidCredentials.password}
+					</div>
+				)}
+
 				<button type="submit" className="mui-btn edit">
 					Valider
 				</button>
 			</form>
-			{/* MESSAGES */}
+			{/* Success Message */}
 			{auth.successMessage && (
 				<div className="info-box">{auth.successMessage}</div>
-			)}
-			{auth.invalidCredentials && (
-				<div className="form-error-msg">
-					<i className="fas fa-exclamation-triangle"></i>
-					{"   "}
-					{auth.invalidCredentials}
-				</div>
 			)}
 		</div>
 	);
