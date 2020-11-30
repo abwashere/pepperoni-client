@@ -1,19 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
-import { isLoggedIn } from "./../../store/actions/authActions";
+import { useSelector } from "react-redux";
 
 const _NavLinksAdmin = (props) => {
 	const auth = useSelector((state) => state.authStore);
 
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(isLoggedIn());
-	}, [dispatch]);
-
-	if (!auth.userIsLoggedIn) return <div></div>;
+	if (!auth.isAuthentificated) return <div></div>;
 	return (
 		<div className="NavLinks">
 			<ul className="flex-row sp-center">

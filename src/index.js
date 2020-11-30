@@ -3,7 +3,12 @@ import ReactDOM from "react-dom";
 import "./styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-// REDUX
+
+// Cookies
+import setAuthToken from "./utils/setAuthToken";
+import jwt_decode from "jwt-decode";
+
+// Redux store
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
@@ -15,6 +20,14 @@ const store = createStore(
 	rootReducer,
 	composeEnhancers(applyMiddleware(thunk))
 );
+
+if (localStorage["jwt-token"]) {
+	setAuthToken(localStorage["jwt-token"]);
+	store.dispatch({
+		type: "auth/isLoggedIn",
+		payload: { user: jwt_decode(localStorage["jwt-token"]) },
+	});
+}
 
 ReactDOM.render(
 	<Provider store={store}>

@@ -1,6 +1,6 @@
 const initState = {
-	userIsLoggedIn: false,
-	loggedUser: null,
+	isAuthentificated: false,
+	user: null,
 	successMessage: null,
 	invalidCredentials: null,
 	warningMessage: null,
@@ -26,9 +26,9 @@ const authReducer = (state = initState, action) => {
 		case "auth/login":
 			return {
 				...state,
-				userIsLoggedIn: action.payload.user ? true : false,
-				loggedUser: action.payload.user || null,
-				successMessage: action.payload.successMessage || null,
+				isAuthentificated: action.payload ? true : false,
+				user: action.payload.user || null,
+				successMessage: action.payload.message || null,
 			};
 
 		case "auth/login_error":
@@ -41,12 +41,13 @@ const authReducer = (state = initState, action) => {
 		case "auth/isLoggedIn":
 			return {
 				...state,
-				userIsLoggedIn: action.payload.isLoggedIn,
-				loggedUserId: action.payload.userId || null,
+				isAuthentificated: action.payload ? true : false,
+				user: action.payload.user || null,
 			};
 
 		case "auth/isLoggedIn_error":
 			return {
+				...state,
 				warningMessage: action.payload.response.data.errors,
 			};
 
@@ -54,12 +55,11 @@ const authReducer = (state = initState, action) => {
 		case "auth/logout":
 			return {
 				...state,
-				userIsLoggedIn: false,
-				loggedUser: null,
+				isAuthentificated: false,
+				user: null,
 				successMessage: action.payload.successMessage || null,
 			};
 		case "auth/logout_error":
-			console.log("Reducer failed to log out user.");
 			return {
 				...state,
 				warningMessage: action.payload.response.data.errors,
@@ -67,7 +67,6 @@ const authReducer = (state = initState, action) => {
 
 		//----------------------------------------
 		case "auth/clearMessages":
-			console.log("Reducer cleared all messages : ");
 			return {
 				...state,
 				successMessage: null,

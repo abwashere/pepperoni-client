@@ -1,4 +1,6 @@
 import * as authApi from "./../../api/authApiHandler";
+import setAuthToken from "../../utils/setAuthToken";
+import jwt_decode from "jwt-decode";
 
 //how to handle errors ==> https://alexandrempsantos.com/sane-error-handling-react-redux/
 export const errorActionCreator = (errorType, error) => {
@@ -25,13 +27,26 @@ export const login = (user) => {
 	return async (dispatch) => {
 		try {
 			const res = await authApi.login(user);
-			dispatch({ type: "auth/login", payload: res.data });
+
+			const token = res.data.token;
+
+			localStorage.setItem("jwt-token", JSON.stringify(token));
+			setAuthToken(token);
+
+			dispatch({
+				type: "auth/login",
+				payload: {
+					user: jwt_decode(localStorage["jwt-token"]),
+					message: res.data.successMessage,
+				},
+			});
 		} catch (err) {
 			dispatch(errorActionCreator("auth/login_error", err));
 		}
 	};
 };
 
+//TODO: KEEP ???
 //User is logged in
 export const isLoggedIn = () => {
 	return async (dispatch) => {
@@ -49,8 +64,11 @@ export const logout = () => {
 	return async (dispatch) => {
 		try {
 			const res = await authApi.logout();
+
+			localStorage.removeItem("jwt-token");
+			setAuthToken(false);
+
 			dispatch({ type: "auth/logout", payload: res.data });
-			//payload is {message}
 		} catch (err) {
 			dispatch(errorActionCreator("auth/logout_error", err));
 		}

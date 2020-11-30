@@ -3,7 +3,7 @@ import { NavLink, withRouter } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-	isLoggedIn,
+	// isLoggedIn,
 	logout,
 	clearMessages,
 } from "./../../store/actions/authActions";
@@ -13,9 +13,9 @@ const _NavLinksAuth = (props) => {
 
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(isLoggedIn());
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(isLoggedIn());
+	// }, []);
 
 	const handleLogout = () => {
 		dispatch(logout());
@@ -28,18 +28,20 @@ const _NavLinksAuth = (props) => {
 	return (
 		<div className="NavLinksAuth">
 			<ul className="flex-row">
-				{!auth.userIsLoggedIn ? (
+				{!auth.isAuthentificated && (
 					<li>
 						<NavLink to="/admin/login" className="nav-link">
 							Personnel
 						</NavLink>
 					</li>
-				) : (
+				)}
+
+				{auth.isAuthentificated && (
 					<>
 						<li className="nav-link" style={{ cursor: "default" }}>
-							{auth.loggedUser.privileges} : <b>{auth.loggedUser.firstName}</b>
+							{auth.user.privileges} : <b>{auth.user.firstName}</b>
 						</li>
-						{auth.loggedUser.privileges === "admin" && (
+						{auth.user.privileges === "admin" && (
 							<NavLink to="/admin/staff" className="nav-link">
 								Liste du Personnel
 							</NavLink>
