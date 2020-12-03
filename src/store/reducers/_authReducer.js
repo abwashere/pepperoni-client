@@ -1,6 +1,6 @@
 const initState = {
 	isAuthentificated: false,
-	user: null,
+	user: null, // = {_id, firstName, privileges}
 	successMessage: null,
 	invalidCredentials: null,
 	warningMessage: null,
@@ -48,7 +48,9 @@ const authReducer = (state = initState, action) => {
 		case "auth/isLoggedIn_error":
 			return {
 				...state,
-				warningMessage: action.payload.response.data.errors,
+				isAuthentificated: false,
+				user: null,
+				invalidCredentials: action.payload.response.data.errors || null,
 			};
 
 		//----------------------------------------
@@ -58,11 +60,6 @@ const authReducer = (state = initState, action) => {
 				isAuthentificated: false,
 				user: null,
 				successMessage: action.payload.successMessage || null,
-			};
-		case "auth/logout_error":
-			return {
-				...state,
-				warningMessage: action.payload.response.data.errors,
 			};
 
 		//----------------------------------------

@@ -1,14 +1,32 @@
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_SERVER_URL + "/api/food";
+const service = axios.create({
+	baseURL: process.env.REACT_APP_SERVER_URL + "/api/food",
+	withCredentials: true,
+});
 
-export const getAllFood = () => axios.get(baseURL);
+const api = {
+	service,
 
-export const getOneFood = (id) => axios.get(`${baseURL}/${id}`);
+	getAllFood() {
+		return service.get();
+	},
 
-export const createFood = (newFood) => axios.post(`${baseURL}/create`, newFood);
+	getOneFood(id) {
+		return service.get(`/${id}`);
+	},
 
-export const updateFood = (id, food) =>
-	axios.patch(`${baseURL}/edit/${id}`, food);
+	createFood(newFood) {
+		return service.post("/create", newFood);
+	},
 
-export const deleteFood = (id) => axios.delete(`${baseURL}/delete/${id}`);
+	updateFood(id, food) {
+		return service.patch(`/edit/${id}`, food);
+	},
+
+	deleteFood(id) {
+		return service.delete(`/delete/${id}`);
+	},
+};
+
+export default api;

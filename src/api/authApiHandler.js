@@ -1,12 +1,28 @@
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_SERVER_URL + "/api/auth";
+const service = axios.create({
+	baseURL: process.env.REACT_APP_SERVER_URL + "/api/auth",
+	withCredentials: true, // Cookie is sent to client (used for session)
+});
 
-export const registerUser = (newUser) =>
-	axios.post(`${baseURL}/signup`, newUser);
+const api = {
+	service,
 
-export const login = (creds) => axios.post(`${baseURL}/login`, creds);
+	registerUser(newUser) {
+		return service.post("/signup", newUser);
+	},
 
-export const isLoggedIn = () => axios.get(`${baseURL}/isLoggedIn`);
+	login(creds) {
+		return service.post("/login", creds);
+	},
 
-export const logout = () => axios.get(`${baseURL}/logout`);
+	isLoggedIn(id) {
+		return service.get(`isLoggedIn/${id}`);
+	},
+
+	logout() {
+		return service.get("/logout");
+	},
+};
+
+export default api;

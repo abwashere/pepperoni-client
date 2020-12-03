@@ -1,14 +1,28 @@
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_SERVER_URL + "/api/users";
+const service = axios.create({
+	baseURL: process.env.REACT_APP_SERVER_URL + "/api/users",
+	withCredentials: true,
+});
 
-export const getAllUsers = () => axios.get(baseURL);
+const api = {
+	service,
 
-export const getOneUser = (id) => axios.get(`${baseURL}/${id}`);
+	getAllUsers() {
+		return service.post("/");
+	},
 
-export const deleteUser = (id) => axios.delete(`${baseURL}/delete/${id}`);
+	getOneUser(id) {
+		return service.post(`/${id}`);
+	},
 
-export const updateUser = (id, user) =>
-	axios.patch(`${baseURL}/edit/${id}`, user);
+	deleteUser(id) {
+		return service.get(`/delete/${id}`);
+	},
 
-// createUser = auth signUp
+	updateUser(id, user) {
+		return service.get(`/edit/${id}`, user);
+	},
+};
+
+export default api;

@@ -1,6 +1,4 @@
-import * as authApi from "./../../api/authApiHandler";
-import setAuthToken from "../../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
+import authApi from "./../../api/authApiHandler";
 
 //how to handle errors ==> https://alexandrempsantos.com/sane-error-handling-react-redux/
 export const errorActionCreator = (errorType, error) => {
@@ -28,15 +26,13 @@ export const login = (user) => {
 		try {
 			const res = await authApi.login(user);
 
-			const token = res.data.token;
-
-			localStorage.setItem("jwt-token", JSON.stringify(token));
-			setAuthToken(token);
+			localStorage.setItem("sessionCookie", JSON.stringify(res.data.cookie));
+			localStorage.setItem("sessionUser", JSON.stringify(res.data.user));
 
 			dispatch({
 				type: "auth/login",
 				payload: {
-					user: jwt_decode(localStorage["jwt-token"]),
+					user: res.data.user,
 					message: res.data.successMessage,
 				},
 			});
@@ -46,28 +42,24 @@ export const login = (user) => {
 	};
 };
 
-//TODO: KEEP ???
-//User is logged in
-export const isLoggedIn = () => {
+//isLoggedIn
+export const isLoggedIn = (id) => {
 	return async (dispatch) => {
 		try {
-			const res = await authApi.isLoggedIn();
+			const res = await authApi.isLoggedIn(id);
 			dispatch({ type: "auth/isLoggedIn", payload: res.data });
 		} catch (err) {
 			dispatch(errorActionCreator("auth/isLoggedIn_error", err));
 		}
 	};
 };
-
 //Logout
 export const logout = () => {
 	return async (dispatch) => {
 		try {
 			const res = await authApi.logout();
-
-			localStorage.removeItem("jwt-token");
-			setAuthToken(false);
-
+			localStorage.removeItem("sessionCookie");
+			localStorage.removeItem("sessionUser");
 			dispatch({ type: "auth/logout", payload: res.data });
 		} catch (err) {
 			dispatch(errorActionCreator("auth/logout_error", err));

@@ -1,4 +1,4 @@
-import * as foodApi from "./../../api/foodApiHandler";
+import foodApi from "./../../api/foodApiHandler";
 
 //1
 export const getMenu = () => {

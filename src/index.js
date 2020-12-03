@@ -4,15 +4,13 @@ import "./styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-// Cookies
-import setAuthToken from "./utils/setAuthToken";
-import jwt_decode from "jwt-decode";
+/* Redux store */
 
-// Redux store
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { rootReducer } from "./store/reducers/rootReducer";
+import { isLoggedIn } from "./store/actions/authActions";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,14 +19,33 @@ const store = createStore(
 	composeEnhancers(applyMiddleware(thunk))
 );
 
-if (localStorage["jwt-token"]) {
-	setAuthToken(localStorage["jwt-token"]);
-	store.dispatch({
-		type: "auth/isLoggedIn",
-		payload: { user: jwt_decode(localStorage["jwt-token"]) },
-	});
+/* Authentification check */
+
+if (localStorage.sessionCookie && localStorage.sessionUser) {
+	const session = JSON.parse(localStorage.sessionCookie);
+	const currentUser = JSON.parse(localStorage.sessionUser);
+
+	// has session expired ?
+	let now = new Date();
+	let expDate = new Date(session.expires);
+	if (expDate.getTime() < now.getTime()) {
+		console.log("Session ended >>> Redirection to homepage.");
+		localStorage.removeItem("sessionCookie");
+		localStorage.removeItem("sessionUser");
+		store.dispatch({
+			type: "auth/logout",
+			payload: { successMessage: "La session a expirée. Reconnectez-vous." },
+		});
+	} else {
+		console.log(">>> Checking user authentification.");
+		store.dispatch(isLoggedIn(currentUser._id));
+	}
+} else {
+	localStorage.removeItem("sessionCookie");
+	localStorage.removeItem("sessionUser");
 }
 
+/* --------------------------------- */
 ReactDOM.render(
 	<Provider store={store}>
 		<App />

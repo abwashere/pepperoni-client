@@ -1,4 +1,4 @@
-import * as userApi from "./../../api/userApiHandler";
+import userApi from "./../../api/userApiHandler";
 
 //1
 export const getAllUsers = () => {

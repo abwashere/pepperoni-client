@@ -1,21 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-	// isLoggedIn,
-	logout,
-	clearMessages,
-} from "./../../store/actions/authActions";
+import { logout, clearMessages } from "./../../store/actions/authActions";
 
 const _NavLinksAuth = (props) => {
 	const auth = useSelector((state) => state.authStore);
 
 	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	dispatch(isLoggedIn());
-	// }, []);
 
 	const handleLogout = () => {
 		dispatch(logout());
