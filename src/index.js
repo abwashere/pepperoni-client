@@ -27,8 +27,8 @@ if (localStorage.sessionCookie && localStorage.sessionUser) {
 
 	// has session expired ?
 	let now = new Date();
-	let expDate = new Date(session.expires);
-	if (expDate.getTime() < now.getTime()) {
+	let sessionEnd = new Date(session.expires);
+	if (sessionEnd.getTime() < now.getTime()) {
 		console.log("Session ended >>> Redirection to homepage.");
 		localStorage.removeItem("sessionCookie");
 		localStorage.removeItem("sessionUser");

@@ -4,6 +4,8 @@ import MenuCreateForm from "../forms/_MenuCreateForm";
 import MenuUpdateForm from "../forms/_MenuUpdateForm";
 
 const EditMenu = (props) => {
+	document.title = "Admin | modification menu";
+
 	return (
 		<div className="EditMenu AdminPage">
 			{props.match.params.mode === "update" && (

@@ -12,19 +12,19 @@ const api = {
 		return service.get();
 	},
 
-	getOneFood(id) {
+	getMeal(id) {
 		return service.get(`/${id}`);
 	},
 
-	createFood(newFood) {
-		return service.post("/create", newFood);
+	createMeal(newMeal) {
+		return service.post("/create", newMeal);
 	},
 
-	updateFood(id, food) {
-		return service.patch(`/edit/${id}`, food);
+	updateMeal(id, meal) {
+		return service.patch(`/edit/${id}`, meal);
 	},
 
-	deleteFood(id) {
+	deleteMeal(id) {
 		return service.delete(`/delete/${id}`);
 	},
 };

@@ -43,6 +43,8 @@ const beforeDelete = (booking) => {
 };
 
 const ReservationList = () => {
+	document.title = "Admin | réservations";
+
 	return (
 		<div className="ReservationList AdminPage">
 			<h2 className="sub-title">Gérer les réservations</h2>
@@ -61,8 +63,8 @@ const ReservationList = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{fakeReservations.map((reservation) => (
-						<tr className="reservation row">
+					{fakeReservations.map((reservation, ind) => (
+						<tr key={ind} className="reservation row">
 							<td>{reservation.date}</td>
 							<td>{reservation.time}</td>
 							<td>{reservation.tableName}</td>

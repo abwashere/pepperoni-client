@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { useDispatch } from "react-redux";
-
-import { createMeal } from "../../store/actions/foodActions";
+import { useDispatch, useSelector } from "react-redux";
+import { createMeal, clearMessages } from "../../store/actions/foodActions";
 import { confirmCreate } from "../../utils/confirmationPrompts";
 
-//TODO: api errors handling
-
 const _MenuCreateForm = (props) => {
-	//
-	document.title = "Admin | ajouter un plat";
+	const foodState = useSelector((state) => state.foodStore);
 
-	//
 	const dispatch = useDispatch();
+
 	const [mealData, setMealData] = useState();
-	const [confirmation, setConfirmation] = useState(false);
+	const [validation, setValidation] = useState(false);
 	const [validationErr, setValidationErr] = useState(false);
 
-	//empty fields check
+	// Empty fields check
 	useEffect(() => {
 		if (!mealData) {
 			//this condition prevents error message to appear at first render
@@ -33,25 +29,53 @@ const _MenuCreateForm = (props) => {
 		}
 	}, [mealData]);
 
-	//form events/functions
+	// Form events/functions
 	const handleChange = (e) =>
 		setMealData({ ...mealData, [e.target.name]: e.target.value });
 
 	const handleReset = () => props.history.go(0);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		let callbackCreate = () => {
-			dispatch(createMeal(mealData));
-			setConfirmation(true);
+		let callbackCreate = async () => {
+			await dispatch(createMeal(mealData));
+			if (!foodState.errorMessage) setValidation(true);
 			setTimeout(() => {
-				setConfirmation(false);
-				handleReset();
+				setValidation(false);
+				// if (!foodState.errorMessage) handleReset();
+				dispatch(clearMessages());
 			}, 6000);
 		};
 
 		confirmCreate(mealData.foodName, callbackCreate); //func that calls the callbackCreate func after confirmation
+	};
+
+	// Messages
+	const displayMessage = () => {
+		if (validationErr)
+			return (
+				<div className="form-error-msg">
+					<i className="fas fa-exclamation-triangle"></i> Veuillez renseigner
+					tous les champs. <br />
+				</div>
+			);
+
+		if (foodState.errorMessage)
+			return (
+				<div className="form-error-msg">
+					<i className="fas fa-exclamation-triangle"></i>{" "}
+					{foodState.errorMessage.foodName}
+					<br />
+				</div>
+			);
+
+		if (validation)
+			return (
+				<div className="info-box">
+					{mealData.foodName} a bien été ajouté à la carte.
+				</div>
+			);
 	};
 
 	return (
@@ -90,22 +114,12 @@ const _MenuCreateForm = (props) => {
 					<textarea name="description"></textarea>
 					<label>Description</label>
 				</div>
-				{/* CREATE CONFIRMATION MESSAGE */}
-				{confirmation && (
-					<div className="info-box">
-						{mealData.foodName} a bien été ajouté à la carte.
-					</div>
-				)}
-				{validationErr && (
-					<div className="form-error-msg">
-						<i className="fas fa-exclamation-triangle"></i> Veuillez renseigner
-						tous les champs. <br />
-					</div>
-				)}
+				{/* --  MESSAGES */}
+				<>{displayMessage()}</>
 				<div className="information-text">
 					La description n'est pas requise pour les desserts.
 				</div>
-				{/* -- BUTTONS  */}
+				{/* --  BUTTONS  */}
 				<div className="btn-group flex-row sp-btw">
 					<button
 						type="submit"

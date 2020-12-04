@@ -1,6 +1,6 @@
 import authApi from "./../../api/authApiHandler";
 
-//how to handle errors ==> https://alexandrempsantos.com/sane-error-handling-react-redux/
+/* Errors dispatching */
 export const errorActionCreator = (errorType, error) => {
 	return {
 		type: errorType,
@@ -9,7 +9,7 @@ export const errorActionCreator = (errorType, error) => {
 	};
 };
 
-//Register new user
+/* Register new employee */
 export const registerUser = (newUser) => {
 	return async (dispatch) => {
 		try {
@@ -21,6 +21,7 @@ export const registerUser = (newUser) => {
 	};
 };
 
+/* Log in */
 export const login = (user) => {
 	return async (dispatch) => {
 		try {
@@ -42,7 +43,7 @@ export const login = (user) => {
 	};
 };
 
-//isLoggedIn
+/* Check logged in user */
 export const isLoggedIn = (id) => {
 	return async (dispatch) => {
 		try {
@@ -53,7 +54,8 @@ export const isLoggedIn = (id) => {
 		}
 	};
 };
-//Logout
+
+/* Logout */
 export const logout = () => {
 	return async (dispatch) => {
 		try {
@@ -67,7 +69,7 @@ export const logout = () => {
 	};
 };
 
-//Clear messages
+/* Clear auth messages */
 export const clearMessages = () => {
 	return (dispatch) => {
 		dispatch({ type: "auth/clearMessages" });

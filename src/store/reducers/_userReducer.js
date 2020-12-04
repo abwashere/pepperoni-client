@@ -1,33 +1,42 @@
 const initState = {
 	users: [],
-	pickedUser: null,
 	errorMessages: null,
 };
 
 const userReducer = (state = initState, action) => {
 	switch (action.type) {
-		//1
+		//--------------------------
 		case "users/getAllUsers":
 			console.log("reducer got : " + action.payload.length + " employees");
-
 			return {
 				...state,
 				users: action.payload,
 			};
 
-		//2
-		case "users/getUser":
-			console.log("reducer => selected user :", action.payload);
+		case "users/getAllUsers_error":
+			console.log("reducer got an error :", action.payload);
 
+			return {
+				...state,
+				errorMessages: action.payload.response.data.errors,
+			};
+
+		//--------------------------
+		case "users/getUser":
 			return {
 				...state,
 				pickedUser: action.payload,
 			};
 
-		//3
-		case "users/update":
-			console.log("reducer => updated user:", action.payload);
+		case "users/getUser_error":
+			console.log("reducer got an error :", action.payload);
+			return {
+				...state,
+				errorMessages: action.payload.response.data.errors,
+			};
 
+		//--------------------------
+		case "users/update":
 			return {
 				...state,
 				users: state.users.map((user) =>
@@ -35,12 +44,25 @@ const userReducer = (state = initState, action) => {
 				),
 			};
 
-		//4
+		case "users/update_error":
+			console.log("reducer got an error :", action.payload);
+			return {
+				...state,
+				errorMessages: action.payload.response.data.errors,
+			};
+
+		//--------------------------
 		case "users/delete":
-			console.log("reducer => deleted user:", action.payload);
 			return {
 				...state,
 				users: state.users.filter((user) => user._id !== action.payload._id),
+			};
+
+		case "users/delete_error":
+			console.log("reducer got an error :", action.payload);
+			return {
+				...state,
+				errorMessages: action.payload.response.data.errors,
 			};
 
 		default:

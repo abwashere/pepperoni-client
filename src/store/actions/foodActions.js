@@ -1,62 +1,73 @@
 import foodApi from "./../../api/foodApiHandler";
 
-//1
+/* Errors dispatching */
+export const errorActionCreator = (errorType, error) => {
+	return {
+		type: errorType,
+		error: true,
+		payload: error,
+	};
+};
+
+/* Get the menu */
 export const getMenu = () => {
 	return async (dispatch) => {
 		try {
 			const res = await foodApi.getAllFood();
 			dispatch({ type: "food/getMenu", payload: res.data });
 		} catch (err) {
-			console.log(err);
-			dispatch({ type: "food/getMenu_error", payload: err });
+			dispatch(errorActionCreator("food/getMenu_error", err));
 		}
 	};
 };
 
-//2
+/* Get a meal */
 export const getMeal = (id) => {
 	return async (dispatch) => {
 		try {
-			const res = await foodApi.getOneFood(id);
+			const res = await foodApi.getMeal(id);
 			dispatch({ type: "food/getMeal", payload: res.data });
 		} catch (err) {
-			console.log(err);
-			//dispatch({ type: "food/getMeal_error", payload: err });
+			dispatch(errorActionCreator("food/getMeal_error", err));
 		}
 	};
 };
 
-//3
+/* Create a meal */
 export const createMeal = (newMeal) => {
 	return async (dispatch) => {
 		try {
-			const res = await foodApi.createFood(newMeal);
+			const res = await foodApi.createMeal(newMeal);
 			dispatch({ type: "food/create", payload: res.data });
 		} catch (err) {
-			console.log(err);
-			dispatch({ type: "food/create_error", payload: err });
+			dispatch(errorActionCreator("food/create_error", err));
 		}
 	};
 };
 
-//4 (shorter syntax)
+/* Update a meal */
 export const updateMeal = (id, updatedInfos) => async (dispatch) => {
 	try {
-		const res = await foodApi.updateFood(id, updatedInfos);
+		const res = await foodApi.updateMeal(id, updatedInfos);
 		dispatch({ type: "food/update", payload: res.data });
 	} catch (err) {
-		console.log(err);
-		dispatch({ type: "food/update_error", payload: err });
+		dispatch(errorActionCreator("food/update_error", err));
 	}
 };
 
-//5 (shorter syntax)
+/* Delete a meal */
 export const deleteMeal = (id) => async (dispatch) => {
 	try {
-		const res = await foodApi.deleteFood(id);
+		const res = await foodApi.deleteMeal(id);
 		dispatch({ type: "food/delete", payload: res.data });
 	} catch (err) {
-		console.log(err);
-		dispatch({ type: "food/delete_error", payload: err });
+		dispatch(errorActionCreator("food/delete_error", err));
 	}
+};
+
+/* Clear menu messages */
+export const clearMessages = () => {
+	return (dispatch) => {
+		dispatch({ type: "food/clearMessages" });
+	};
 };

@@ -12,10 +12,6 @@ import { confirmDelete } from "../../utils/confirmationPrompts";
 //TODO: api errors handling
 
 const _MenuUpdateForm = (props) => {
-	//
-	document.title = "Admin | modifier menu";
-
-	//
 	const dispatch = useDispatch();
 
 	//load the menu at first render and dispatch calls
@@ -72,8 +68,6 @@ const _MenuUpdateForm = (props) => {
 		confirmDelete(currentMeal.foodName, callbackDelete);
 	};
 
-	/* --------- RENDER --------- */
-	/* -------------------------- */
 	return (
 		<div className="EditMenuForm form-container">
 			<form className="mui-form" onSubmit={handleSubmit}>

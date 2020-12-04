@@ -9,19 +9,19 @@ const api = {
 	service,
 
 	getAllUsers() {
-		return service.post("/");
+		return service.get("/");
 	},
 
 	getOneUser(id) {
-		return service.post(`/${id}`);
+		return service.get(`/${id}`);
 	},
 
 	deleteUser(id) {
-		return service.get(`/delete/${id}`);
+		return service.delete(`/delete/${id}`);
 	},
 
 	updateUser(id, user) {
-		return service.get(`/edit/${id}`, user);
+		return service.patch(`/edit/${id}`, user);
 	},
 };
 

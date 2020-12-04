@@ -1,88 +1,93 @@
 const initState = {
 	menu: [],
-	//errorFromApi: null,
-	pickedMeal: null,
+	errorMessage: null,
 };
 
 const foodReducer = (state = initState, action) => {
 	switch (action.type) {
-		//1
+		//--------------------------
 		case "food/getMenu":
-			console.log(
-				"reducer got the menu: " + action.payload.length + "meals in store"
-			);
-
 			return {
 				...state,
 				menu: action.payload,
 			};
 
-		// case "food/getMenu_error":
-		// 	console.log("reducer => fail to get the menu: ", action.payload);
+		case "food/getMenu_error":
+			console.log("reducer => fail to get the menu: ", action.payload);
+			return {
+				...state,
+				errorMessage: action.payload.response.data.errors,
+			};
 
-		// 	return {
-		// 		...state,
-		// 		errorFromApi: action.payload,
-		// 	};
-
-		//2
+		//--------------------------
 		case "food/getMeal":
-			console.log("reducer got meal selected:", action.payload);
-
 			return {
 				...state,
 				pickedMeal: action.payload,
 			};
 
-		//3
-		case "food/create":
-			console.log("reducer got created meal:", action.payload);
+		case "food/getMeal_error":
+			console.log("reducer => fail to getting a meal:", action.payload);
+			return {
+				...state,
+				errorMessage: action.payload.response.data.errors,
+			};
 
+		//--------------------------
+		case "food/create":
 			return {
 				...state,
 				menu: [...state.menu, action.payload],
 			};
-		// case "food/create_error":
-		// 	console.log("reducer => fail to create meal:", action.payload);
 
-		// 	return {
-		// 		...state,
-		// 		errorFromApi: action.payload,
-		// 	};
+		case "food/create_error":
+			console.log(
+				"reducer => fail to create meal:",
+				action.payload.response.data.errors
+			);
+			return {
+				...state,
+				errorMessage: action.payload.response.data.errors,
+			};
 
-		//4
+		//--------------------------
 		case "food/update":
-			console.log("reducer => got updated meal:", action.payload);
-
 			return {
 				...state,
 				menu: state.menu.map((meal) =>
 					meal._id === action.payload._id ? action.payload : meal
 				),
 			};
-		// case "food/update_error":
-		// 	console.log("reducer => fail to update meal:", action.payload);
 
-		// 	return {
-		// 		...state,
-		// 		errorFromApi: action.payload,
-		// 	};
+		case "food/update_error":
+			console.log("reducer => fail to update meal:", action.payload);
+			return {
+				...state,
+				errorMessage: action.payload.response.data.errors,
+			};
 
-		//5
+		//--------------------------
 		case "food/delete":
-			console.log("reducer => got deleted meal:", action.payload);
+			console.log("deleted : ", action.payload);
 			return {
 				...state,
 				menu: state.menu.filter((meal) => meal._id !== action.payload._id),
 			};
-		// case "food/delete_error":
-		// 	console.log("reducer => fail to delete meal:", action.payload);
-		// 	return {
-		// 		...state,
-		// 		errorFromApi: action.payload,
-		// 	};
 
-		//default
+		case "food/delete_error":
+			console.log("reducer => fail to delete meal:", action.payload);
+			return {
+				...state,
+				errorMessage: action.payload.response.data.errors,
+			};
+
+		//--------------------------
+		case "food/clearMessages":
+			return {
+				...state,
+				errorMessage: null,
+			};
+
 		default:
 			return state;
 	}
