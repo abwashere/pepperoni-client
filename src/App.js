@@ -1,6 +1,7 @@
 import "./styles/App.sass";
 
 import { Route, BrowserRouter, Switch } from "react-router-dom";
+import PrivateRoute from "./components/auth/PrivateRoute";
 import Navbar from "./components/navMain/Navbar";
 import Home from "./components/homePages/Home";
 import Menu from "./components/Menu";
@@ -22,11 +23,18 @@ function App() {
 					<Route exact path="/" component={Home} />
 					<Route exact path="/menu" component={Menu} />
 					<Route exact path="/reservation" component={Reservation} />
-					{/* ADMIN ROUTES TODO: PROTECT */}
+
+					{/* ADMIN ROUTES */}
 					<Route path="/admin/login" component={LogIn} />
-					<Route path="/admin/staff" component={EmployeesList} />
-					<Route path="/admin/reservations" component={ReservationList} />
-					<Route path="/admin/menu/:mode(create|update)" component={EditMenu} />
+					<PrivateRoute path="/admin/staff" component={EmployeesList} />
+					<PrivateRoute
+						path="/admin/reservations"
+						component={ReservationList}
+					/>
+					<PrivateRoute
+						path="/admin/menu/:mode(create|update)"
+						component={EditMenu}
+					/>
 				</Switch>
 				<Footer />
 			</div>
