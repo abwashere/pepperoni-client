@@ -25,6 +25,12 @@ if (localStorage.sessionCookie && localStorage.sessionUser) {
 	const session = JSON.parse(localStorage.sessionCookie);
 	const currentUser = JSON.parse(localStorage.sessionUser);
 
+	// This dispatch prevents quick redirection on page refresh while user is logged in (before the async isLoggedIn action bellow is done)
+	store.dispatch({
+		type: "auth/isLoggedIn",
+		payload: { user: currentUser },
+	});
+
 	// has session expired ?
 	let now = new Date();
 	let sessionEnd = new Date(session.expires);
@@ -37,7 +43,6 @@ if (localStorage.sessionCookie && localStorage.sessionUser) {
 			payload: { successMessage: "La session a expirée. Reconnectez-vous." },
 		});
 	} else {
-		console.log(">>> Checking user authentification.");
 		store.dispatch(isLoggedIn(currentUser._id));
 	}
 } else {

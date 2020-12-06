@@ -1,12 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser, clearMessages } from "./../../store/actions/authActions";
+import { getAllUsers } from "./../../store/actions/userActions";
 
 const _EmployeeRegistrationForm = () => {
 	const auth = useSelector((state) => state.authStore);
 	const dispatch = useDispatch();
 
-	const handleSubmit = (evt) => {
+	const handleSubmit = async (evt) => {
 		evt.preventDefault();
 		const newUser = {
 			lastName: evt.target.elements[0].value,
@@ -16,16 +17,11 @@ const _EmployeeRegistrationForm = () => {
 			privileges: evt.target.elements[4].value,
 		};
 
-		dispatch(registerUser(newUser));
+		await dispatch(registerUser(newUser));
+		await dispatch(getAllUsers());
 
 		setTimeout(() => {
 			dispatch(clearMessages());
-			if (auth.successMessage) {
-				evt.target.elements[0].value = "";
-				evt.target.elements[1].value = "";
-				evt.target.elements[2].value = "";
-				evt.target.elements[3].value = "";
-			}
 		}, 5000);
 	};
 
