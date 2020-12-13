@@ -3,15 +3,13 @@ const pmHours = ["19h30", "20h00", "20h30", "21h00", "21h30", "22h00"];
 const dayHours = [...amHours, ...pmHours];
 
 const openingHours = [
-	{ day: "Wednesday", hours: pmHours },
-	{ day: "Thursday", hours: dayHours },
-	{ day: "Friday", hours: dayHours },
-	{ day: "Saturday", hours: dayHours },
-	{ day: "Sunday", hours: amHours },
-	{ day: "Monday", hours: "fermé" },
-	{ day: "Tuesday", hours: "fermé" },
+	{ day: 0, hours: amHours }, // Sunday
+	{ day: 1, hours: "fermé" }, // Monday
+	{ day: 2, hours: "fermé" }, // ...
+	{ day: 3, hours: pmHours },
+	{ day: 4, hours: dayHours },
+	{ day: 5, hours: dayHours },
+	{ day: 6, hours: dayHours }, // Saturday
 ];
-
-//console.log(openingHours);
 
 export { openingHours };

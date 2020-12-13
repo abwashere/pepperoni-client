@@ -1,49 +1,47 @@
-import React from "react";
-
-const fakeReservations = [
-	{
-		date: "2020-11-05",
-		time: "20h00",
-		tableName: "table-1",
-		people: 7,
-		clientName: "John Doe",
-		clientPhone: "0123456789",
-	},
-	{
-		date: "2020-11-15",
-		time: "20h00",
-		tableName: "table-2",
-		people: 4,
-		clientName: "Jennifer Doe",
-		clientPhone: "0123456789",
-	},
-	{
-		date: "2020-11-04",
-		time: "21h00",
-		tableName: "table-1",
-		people: 2,
-		clientName: "Audrey Peppe",
-		clientPhone: "0123456789",
-		clientEmail: "audrey@pepperoni.com",
-	},
-];
-
-const handleDelete = (booking) => {
-	console.log(`You deleted reservation of ${booking}`);
-};
-
-const beforeDelete = (booking) => {
-	let checkDelete = prompt(
-		"Etes-vous sûr(e) de vouloir supprimer cette réservation ? Si oui, entrez 'o'.",
-		"non"
-	);
-	checkDelete !== null && checkDelete.toLowerCase() === "o"
-		? console.log(`You deleted reservation of ${booking}`) //handleDelete()
-		: console.log("Abort delete");
-};
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+	getAllReservations,
+	cancelReservation,
+	clearMessages,
+} from "./../../store/actions/reservationActions";
 
 const ReservationList = () => {
 	document.title = "Admin | réservations";
+
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getAllReservations());
+	}, [dispatch]);
+
+	const reservations = useSelector(
+		(state) => state.reservationStore.reservations
+	);
+	const successMessage = useSelector(
+		(state) => state.reservationStore.successMessage
+	);
+
+	const handleDelete = async (slot, table) => {
+		await dispatch(cancelReservation(slot._id, table._id));
+		await dispatch(getAllReservations());
+		setTimeout(() => {
+			dispatch(clearMessages());
+		}, 5000);
+	};
+
+	const beforeDelete = (slot, table) => {
+		let checkDelete = prompt(
+			`Etes-vous sûr(e) de vouloir supprimer cette réservation ? => ${slot.date
+				.toLocaleString("fr-FR")
+				.slice(0, 10)} à ${slot.time}, au nom de ${
+				table.reservation[0].clientName
+			}. Si oui, entrez 'o'.`,
+			"non"
+		);
+		checkDelete !== null && checkDelete.toLowerCase() === "o"
+			? handleDelete(slot, table)
+			: console.log("Abort delete");
+	};
 
 	return (
 		<div className="ReservationList AdminPage">
@@ -63,28 +61,34 @@ const ReservationList = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{fakeReservations.map((reservation, ind) => (
-						<tr key={ind} className="reservation row">
-							<td>{reservation.date}</td>
-							<td>{reservation.time}</td>
-							<td>{reservation.tableName}</td>
-							<td>{reservation.people}</td>
-							<td>{reservation.clientName}</td>
-							<td>{reservation.clientPhone}</td>
-							<td>{reservation.clientEmail}</td>
-							<td>
-								<button
-									type="submit"
-									onClick={() => beforeDelete(reservation.clientName)}
-									className="mui-btn mui-btn delete"
-								>
-									<i className="fas fa-trash-alt fa-sm"></i>
-								</button>
-							</td>
-						</tr>
-					))}
+					{reservations?.map((slot) =>
+						slot.tables.map((table) => (
+							<tr key={table._id} className="reservation row">
+								<td>{slot.date.toLocaleString("fr-FR").slice(0, 10)}</td>
+								<td>{slot.time}</td>
+								<td>{table.tableName}</td>
+								<td>{table.capacity}</td>
+								{/* TODO: mettre le nombre réels de places réservées => changer le tableModel */}
+								<td>{table.reservation[0].clientName}</td>
+								<td>{table.reservation[0].clientPhone}</td>
+								<td>{table.reservation[0].clientEmail}</td>
+								<td>
+									<button
+										type="submit"
+										onClick={() => beforeDelete(slot, table)}
+										className="mui-btn mui-btn delete"
+									>
+										<i className="fas fa-trash-alt fa-sm"></i>
+									</button>
+								</td>
+							</tr>
+						))
+					)}
 				</tbody>
 			</table>
+
+			{/* Success Message */}
+			{successMessage && <div className="info-box">{successMessage}</div>}
 		</div>
 	);
 };
