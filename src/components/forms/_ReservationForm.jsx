@@ -13,7 +13,13 @@ import { openingHours } from "./../../assets/data/openingHours";
 
 const _ReservationForm = () => {
 	const dispatch = useDispatch();
-	const reservation = useSelector((state) => state.reservationStore);
+	const slot = useSelector((state) => state.reservationStore.slot);
+	const successMessage = useSelector(
+		(state) => state.reservationStore.successMessage
+	);
+	const errorMessage = useSelector(
+		(state) => state.reservationStore.errorMessage
+	);
 
 	const [step1, setStep1] = useState(false);
 	const [startDate, setStartDate] = useState(new Date());
@@ -22,42 +28,47 @@ const _ReservationForm = () => {
 		(moment) => moment.day === startDate?.getDay()
 	)[0].hours;
 
-	useEffect(() => {
-		if (startDate && time) {
-			dispatch(postSlot(startDate, time));
-			setStep1(true);
-			setBooking({ ...booking, slotID: reservation.slot._id });
-		}
-	}, [startDate, time]);
-
 	const [booking, setBooking] = useState({
 		slotID: "",
 		seats: "",
 		client: { clientName: "", clientPhone: "", clientEmail: "" },
 	});
 
+	useEffect(() => {
+		if (startDate && time) {
+			dispatch(postSlot(startDate, time));
+			setStep1(true);
+		}
+	}, [startDate, time]);
+
+	useEffect(() => {
+		slot && setBooking({ ...booking, slotID: slot._id });
+	}, [slot]);
+
 	const handleChange = (evt) => {
 		const key = evt.target.name;
 		const value = evt.target.value;
 		if (key === "time") setTime(value);
-		if (key === "seats") setBooking({ ...booking, seats: value });
-		else setBooking({ ...booking, [booking.client.key]: value });
+		else if (key === "seats") setBooking({ ...booking, seats: value });
+		else
+			setBooking({ ...booking, client: { ...booking.client, [key]: value } });
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(booking);
 
-		// await dispatch(postReservation(booking));
+		await dispatch(postReservation(booking));
 
-		// setTimeout(() => {
-		// 	dispatch(clearMessages());
-		// 	setStep1(false);
-		// }, 6000);
+		setTimeout(() => {
+			dispatch(clearMessages());
+			setStep1(false);
+		}, 6000);
 	};
 
 	return (
 		<div className="ReservationForm form-container">
+			{/* Success Message */}
+			{successMessage && <div className="info-box">{successMessage}</div>}
 			<form
 				className="mui-form"
 				onChange={handleChange}
@@ -148,6 +159,13 @@ const _ReservationForm = () => {
 							>
 								Réserver
 							</button>
+							{/* Error Message */}
+							{errorMessage && (
+								<div className="form-error-msg">
+									{errorMessage.unavailability} :(
+									<br />
+								</div>
+							)}
 						</div>
 					)}
 				</div>
