@@ -14,6 +14,10 @@ import { openingHours } from "./../../assets/data/openingHours";
 const _ReservationForm = () => {
 	const dispatch = useDispatch();
 	const slot = useSelector((state) => state.reservationStore.slot);
+	let maxCapacity;
+	if (slot)
+		maxCapacity = Math.max(...slot.tables.map((table) => table.capacity));
+
 	const successMessage = useSelector(
 		(state) => state.reservationStore.successMessage
 	);
@@ -24,7 +28,7 @@ const _ReservationForm = () => {
 	const [step1, setStep1] = useState(false);
 	const [startDate, setStartDate] = useState(new Date());
 	const [time, setTime] = useState("");
-	const oh = openingHours.filter(
+	const openHours = openingHours.filter(
 		(moment) => moment.day === startDate?.getDay()
 	)[0].hours;
 
@@ -39,17 +43,39 @@ const _ReservationForm = () => {
 			dispatch(postSlot(startDate, time));
 			setStep1(true);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [startDate, time]);
 
 	useEffect(() => {
 		slot && setBooking({ ...booking, slotID: slot._id });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [slot]);
+
+	const errorMessageFor = (field) => {
+		if (errorMessage?.[field])
+			if (field === "unavailability") {
+				return (
+					<div className="form-error-msg">
+						{errorMessage.unavailability}
+						<br /> :(
+					</div>
+				);
+			} else {
+				return (
+					<div className="form-error-msg">
+						<i className="fas fa-exclamation-triangle"></i>
+						{"   "}
+						{errorMessage[field]}
+					</div>
+				);
+			}
+	};
 
 	const handleChange = (evt) => {
 		const key = evt.target.name;
 		const value = evt.target.value;
 		if (key === "time") setTime(value);
-		else if (key === "seats") setBooking({ ...booking, seats: value });
+		else if (key === "seats") setBooking({ ...booking, seats: Number(value) });
 		else
 			setBooking({ ...booking, client: { ...booking.client, [key]: value } });
 	};
@@ -61,8 +87,8 @@ const _ReservationForm = () => {
 
 		setTimeout(() => {
 			dispatch(clearMessages());
-			setStep1(false);
-		}, 6000);
+			// if (!errorMessage) setStep1(false);
+		}, 10000);
 	};
 
 	return (
@@ -78,44 +104,52 @@ const _ReservationForm = () => {
 					{/* Part 1 : Client pick a date and amount of seats desired */}
 					<div className="form-left-side">
 						{/* ---------------Reservation Date */}
-						<label>Date</label>
-						<DatePicker
-							dateFormat="yyyy-MM-dd"
-							minDate={new Date()}
-							maxDate={new Date().setMonth(new Date().getMonth() + 2)} // tables can be booked within the 2 next months
-							filterDate={(date) => appDates(date, 1, 2)} // Mondays and Tuesdaus are excluded
-							selected={startDate}
-							onChange={(date) => {
-								setStartDate(date);
-								setTime("");
-							}}
-							required={true}
-						/>
+						<div className="mui-select">
+							<DatePicker
+								className="datepicker"
+								dateFormat="yyyy-MM-dd"
+								minDate={new Date()}
+								maxDate={new Date().setMonth(new Date().getMonth() + 2)} // tables can be booked within the 2 next months
+								filterDate={(date) => appDates(date, 1)} // Mondays are excluded
+								selected={startDate}
+								onChange={(date) => {
+									setStartDate(date);
+									setTime("");
+								}}
+								required={true}
+							/>
+							<label>Date</label>
+						</div>
 						{/* ---------------Reservation Hour */}
 						<div className="mui-select">
 							<select name="time" onChange={handleChange} value={time} required>
-								<option hidden={true}>Sélectionner une heure</option>
-								{oh.map((hour, i) => (
-									<option key={i}>{hour}</option>
-								))}
+								<option hidden={true}>Choix</option>
+								{openHours &&
+									openHours.map((hour, i) => <option key={i}>{hour}</option>)}
 							</select>
 							<label>Heure</label>
 						</div>
+						{/* Error Messages */}
+						{errorMessageFor("time")}
+						{errorMessageFor("unavailability")}
 					</div>
+
 					{/* Part 2 */}
 					{step1 && (
 						<div className="form-right-side">
-							{/* ---------------Reservation Capacity */}
+							{/* ---------------Reservation Seats */}
 							<div className="mui-textfield mui-textfield--float-label">
 								<input
 									type="number"
-									max="20"
+									min="1"
+									max={maxCapacity}
 									name="seats"
 									onChange={handleChange}
 									required
 								/>
 								<label>Nombre de personnes</label>
 							</div>
+							{errorMessageFor("capacity")}
 							{/* ---------------ClientName */}
 							<div className="mui-textfield mui-textfield--float-label">
 								<input
@@ -126,6 +160,7 @@ const _ReservationForm = () => {
 								/>
 								<label>Votre nom</label>
 							</div>
+							{errorMessageFor("clientName")}
 							{/* ---------------ClientPhone */}
 							<div className="mui-textfield mui-textfield--float-label">
 								<input
@@ -136,6 +171,7 @@ const _ReservationForm = () => {
 								/>
 								<label>Téléphone</label>
 							</div>
+							{errorMessageFor("clientPhone")}
 							{/* ---------------ClientEmail */}
 							<div className="mui-textfield mui-textfield--float-label">
 								<input
@@ -145,13 +181,14 @@ const _ReservationForm = () => {
 								/>
 								<label>Email (optionnel)</label>
 							</div>
-							{/* ---------------Optionnal TODO: later */}
-							<div className="mui-textfield mui-textfield--float-label">
-								<textarea></textarea>
-								<label>Une demande particulière ?</label>
-							</div>
+							{errorMessageFor("clientEmail")}
 
 							{/* ------------------------------------------------------------ */}
+							<div className="information-text">
+								Nos tables accueillent jusqu'à {maxCapacity} couverts. <br />
+								Si vous souhaitez réserver pour un plus grand nombre de
+								personnes, merci de nous appeler directement.
+							</div>
 							<button
 								type="submit"
 								onSubmit={handleSubmit}
@@ -159,13 +196,6 @@ const _ReservationForm = () => {
 							>
 								Réserver
 							</button>
-							{/* Error Message */}
-							{errorMessage && (
-								<div className="form-error-msg">
-									{errorMessage.unavailability} :(
-									<br />
-								</div>
-							)}
 						</div>
 					)}
 				</div>

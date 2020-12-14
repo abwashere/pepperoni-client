@@ -16,8 +16,6 @@ const _LoginForm = () => {
 				password: evt.target.elements[1].value,
 			})
 		);
-
-		// set timout to dispatch(clearMessages())
 		setTimeout(() => {
 			dispatch(clearMessages());
 		}, 4000);

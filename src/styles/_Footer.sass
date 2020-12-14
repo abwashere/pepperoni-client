@@ -1,10 +1,10 @@
 %one-third
-  width: 30%
+  // width: 30%
   p
-    margin-bottom: 10px
+    margin-bottom: 12px
 
 .Footer
-  color: #e6e3dc
+  color: #dfdfdf
   background-color: $primary
   padding: 50px 150px
 
@@ -12,18 +12,40 @@
 
   align-items: baseline
 
+  .col-title
+    color: #fff
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif
+    font-size: 17px
+
 .Contact, .Location, .Timetable
   @extend %one-third
+  text-align: center
 
 .Contact
 
   .contact
-    margin-bottom: 20px
+    margin-bottom: 50px
 
-  .fab
+  .icon
     margin-right: 20px
+
+    &.fab
+      color: $caramel
+      &:hover
+        color: #dfdfdf
+
+  a
+    padding: 0
 
 .Timetable
 
   th, td
-    padding-right: 20px
+    padding: 0 20px
+
+.NavLinksAuth
+  min-height: 25px
+  line-height: 25px
+  width: 100%
+  background-color: #222222
+  color: $light
+  font-size: 13px

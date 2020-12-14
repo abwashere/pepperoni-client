@@ -9,8 +9,6 @@ import {
 } from "../../store/actions/foodActions";
 import { confirmDelete } from "../../utils/confirmationPrompts";
 
-//TODO: api errors handling
-
 const _MenuUpdateForm = (props) => {
 	const dispatch = useDispatch();
 

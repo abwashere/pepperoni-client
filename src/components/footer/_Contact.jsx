@@ -4,19 +4,19 @@ const _Contact = () => {
 	return (
 		<div className="Contact">
 			<div className="contact">
-				<p>CONTACT</p>
+				<p className="col-title">CONTACT</p>
 				<p>
-					<i className="fas fa-phone"></i> 01 23 45 67 89
+					<i className="fas fa-phone fa-sm icon"></i> 01 23 45 67 89
 				</p>
 			</div>
 			<div className="contact">
-				<p>SUIVEZ-NOUS</p>
+				<p className="col-title">NOS RESEAUX SOCIAUX</p>
 				<div>
 					<a href="/" noopener="true">
-						<i className="fab fa-facebook-f"></i>
+						<i className="fab fa-facebook-f fa-2x icon"></i>
 					</a>
 					<a href="/" noopener="true">
-						<i className="fab fa-instagram"></i>
+						<i className="fab fa-instagram fa-2x icon"></i>
 					</a>
 				</div>
 			</div>

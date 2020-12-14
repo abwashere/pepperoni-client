@@ -3,7 +3,7 @@ import { NavLink, withRouter } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 
-const _NavLinksAdmin = (props) => {
+const _NavLinksAdmin = () => {
 	const auth = useSelector((state) => state.authStore);
 
 	if (!auth.isAuthentificated) return <div></div>;

@@ -4,7 +4,4 @@ export default function validateFrenchPhone(num) {
 	return regex.test(num)
 		? { phone: num, validPhone: true }
 		: { validPhone: false };
-	// or :
-	// ? this.setState({ phone: phoneNumber, validPhone: true })
-	//   : this.setState({ validPhone: false });
 }

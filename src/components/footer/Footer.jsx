@@ -5,7 +5,7 @@ import Timetable from "./_Timetable";
 
 const Footer = () => {
 	return (
-		<footer className="Footer flex-row sp-btw ">
+		<footer className="Footer flex-row sp-btw align-start">
 			<Contact />
 			<Location />
 			<Timetable />

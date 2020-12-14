@@ -5,7 +5,7 @@ import NavLinksAuth from "./_NavLinksAuth";
 import NavLinksAdmin from "./_NavLinksAdmin";
 import NavLinksClients from "./_NavLinksClients";
 
-const Navbar = (props) => {
+const Navbar = () => {
 	return (
 		<div className="NavMain flex-col sp-btw">
 			<NavLinksAuth />
@@ -21,13 +21,9 @@ const Navbar = (props) => {
 				</h2>
 			</header>
 
-			{/* TODO: if admin is logged in */}
 			<NavLinksAdmin />
 
-			{/* TODO: else */}
 			<NavLinksClients />
-
-			{/* TODO: add burger => media queries... */}
 		</div>
 	);
 };

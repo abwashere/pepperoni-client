@@ -27,7 +27,7 @@ const _Carousel = () => {
 	return (
 		<Carousel activeIndex={index} onSelect={handleSelect} className="Carousel">
 			{carouselImages.map((img, index) => (
-				<Carousel.Item interval={5000} key={index}>
+				<Carousel.Item interval={4000} key={index}>
 					<img
 						className="d-block w-9 carousel-pic"
 						src={img.url}
