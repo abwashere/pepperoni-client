@@ -2,6 +2,7 @@ import "./styles/App.sass";
 
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import PrivateRoute from "./components/auth/PrivateRoute";
+import NotFound from "./components/NotFound";
 import Navbar from "./components/navMain/Navbar";
 import Home from "./components/homePages/Home";
 import Menu from "./components/Menu";
@@ -35,6 +36,7 @@ function App() {
 						path="/admin/menu/:mode(create|update)"
 						component={EditMenu}
 					/>
+					<Route path="*" component={NotFound} />
 				</Switch>
 				<Footer />
 			</div>
