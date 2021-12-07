@@ -1,16 +1,32 @@
-# Pepperoni App (Front-End)
+# Pepperoni app
+Client app
+
+## Description
+This app was created for training purposes.
+
+It is a fake restaurant website that is also used to make/edit reservations, change the menu, and add/edit staff members.
+
 
 ## Getting started
+This app has 2 repositories : [Api](https://github.com/abwashere/pepperoni-server),
+[Front](https://github.com/abwashere/pepperoni-client).
+
 
 ### 1. Install Dependencies
 
-### 2. Set Environment Variables
+Use npm to install packages.
+```bash
+cd pepperoni-client
+npm install
+```
 
-Set up those variables in a `.env` file before first running the scripts.
+### 2. Set Environment Variables - client side
 
-- REACT_APP_PORT = 3000
+Set up those variables in a **`.env`** file before first running the scripts.
 
-- REACT_APP_SERVER_URL = your-backend-localhost-url
+REACT_APP_PORT = 3000
+
+REACT_APP_SERVER_URL = "your-backend-localhost-url"
 
 ## Available Scripts
 
