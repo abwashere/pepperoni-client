@@ -5,7 +5,7 @@ const _Contact = () => {
 		<div className="Contact">
 			<div className="contact">
 				<p className="col-title">CONTACT</p>
-				<p>
+				<p data-testid="pepperoni-phone-number">
 					<i className="fas fa-phone fa-sm icon"></i> 01 23 45 67 89
 				</p>
 			</div>

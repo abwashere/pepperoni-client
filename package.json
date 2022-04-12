@@ -51,6 +51,7 @@
     "dotenv-cli": "^4.0.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.2.2"
+    "@testing-library/user-event": "^12.2.2",
+    "luxon": "^2.3.1"
   }
 }
