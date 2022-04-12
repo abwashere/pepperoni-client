@@ -1,0 +1,86 @@
+const mockedSlotsResponse = {
+  data: {
+    slot: {
+      _id: "624bebf15800ff58a80d63e8",
+      date: "2022-04-20T07:12:40.000Z",
+      time: "20h00",
+      tables: [
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63e9",
+          tableNum: 1,
+          tableName: "Table 1",
+          capacity: 6,
+          reservation: [],
+        },
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63ea",
+          tableNum: 2,
+          tableName: "Table 2",
+          capacity: 4,
+          reservation: [],
+        },
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63eb",
+          tableNum: 3,
+          tableName: "Table 3",
+          capacity: 3,
+          reservation: [],
+        },
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63ec",
+          tableNum: 4,
+          tableName: "Table 4",
+          capacity: 4,
+          reservation: [],
+        },
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63ed",
+          tableNum: 5,
+          tableName: "Table 5",
+          capacity: 3,
+          reservation: [],
+        },
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63ee",
+          tableNum: 6,
+          tableName: "Table 6",
+          capacity: 8,
+          reservation: [],
+        },
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63ef",
+          tableNum: 7,
+          tableName: "Table 7",
+          capacity: 5,
+          reservation: [],
+        },
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63f0",
+          tableNum: 8,
+          tableName: "Table 8",
+          capacity: 5,
+          reservation: [],
+        },
+        {
+          isAvailable: true,
+          _id: "624bebf15800ff58a80d63f1",
+          tableNum: 9,
+          tableName: "Table 9",
+          capacity: 10,
+          reservation: [],
+        },
+      ],
+      __v: 0,
+    },
+  },
+};
+
+export { mockedSlotsResponse };
