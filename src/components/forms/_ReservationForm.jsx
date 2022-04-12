@@ -155,6 +155,7 @@ const _ReservationForm = () => {
                 <input
                   aria-label="nom pour la réservation"
                   type="text"
+                  minlength="2"
                   name="clientName"
                   onChange={handleChange}
                   required
