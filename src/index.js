@@ -20,6 +20,10 @@ const store = createStore(
 
 /* Authentification check */
 
+if (process.env.REACT_APP_NODE_ENV === "dev") {
+	store.dispatch(isLoggedIn("admin123"));
+}
+
 if (localStorage.sessionCookie && localStorage.sessionUser) {
 	const session = JSON.parse(localStorage.sessionCookie);
 	const currentUser = JSON.parse(localStorage.sessionUser);
@@ -39,7 +43,9 @@ if (localStorage.sessionCookie && localStorage.sessionUser) {
 		localStorage.removeItem("sessionUser");
 		store.dispatch({
 			type: "auth/logout",
-			payload: { successMessage: "La session a expirée. Reconnectez-vous." },
+			payload: {
+				successMessage: "La session a expirée. Reconnectez-vous.",
+			},
 		});
 	} else {
 		store.dispatch(isLoggedIn(currentUser._id));
