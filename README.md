@@ -28,6 +28,8 @@ REACT_APP_PORT = 3000
 
 REACT_APP_SERVER_URL = "your-backend-localhost-url"
 
+REACT_APP_NODE_ENV = "dev" // only in dev
+
 ## Available Scripts
 
 In the project directory, you can run:
