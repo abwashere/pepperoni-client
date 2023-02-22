@@ -24,7 +24,6 @@ npm install
 
 Set up those variables in a **`.env`** file before first running the scripts.
 
-REACT_APP_PORT = 3000\
 REACT_APP_SERVER_URL = "your-backend-localhost-url"\
 REACT_APP_NODE_ENV = "dev"
 
