@@ -20,7 +20,7 @@ const store = createStore(
 
 /* Authentification check */
 
-if (process.env.REACT_APP_NODE_ENV === "dev") {
+if (process.env.REACT_APP_NODE_ENV && process.env.REACT_APP_NODE_ENV === "dev") {
 	store.dispatch(isLoggedIn("admin123"));
 }
 
